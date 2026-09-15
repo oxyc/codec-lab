@@ -344,7 +344,9 @@ async function play(c, format, method) {
   held = [];
   const started = performance.now();
   const audioOnly = !c.codecs.video;
-  const unheard = deaf.has(pathOf(format, method));
+  // Media from another origin reaches an analyser as silence.
+  const unheard = deaf.has(pathOf(format, method))
+    || (audioProbe?.kind === 'analyser' && new URL(format.url, location.href).origin !== location.origin);
   const result = {
     case: c.id, format: format.format, method, url: format.url, result: 'stalled',
     width: 0, height: 0, frames: 0, time: 0, ttffMs: null, droppedPct: null, reachedEnd: false,
