@@ -277,6 +277,15 @@ function reset() {
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+const visible = () => new Promise((resolve) => {
+  const onChange = () => {
+    if (document.hidden) return;
+    document.removeEventListener('visibilitychange', onChange);
+    resolve();
+  };
+  document.addEventListener('visibilitychange', onChange);
+});
+
 function frameCount(result) {
   return 'requestVideoFrameCallback' in video ? result.frames : (video.getVideoPlaybackQuality?.().totalVideoFrames || 0);
 }
@@ -317,6 +326,12 @@ async function play(c, format, method) {
   };
   let frameHandle = null;
   let failure = null;
+  // A hidden tab stops drawing video and throttles timers, so a test that was hidden at any point measured nothing.
+  let hidden = document.hidden;
+  const onVisibility = () => { if (document.hidden) hidden = true; };
+  document.addEventListener('visibilitychange', onVisibility);
+  // The playback-quality counters are not reset by every browser between sources: dropped frames are counted from here.
+  const qualityBefore = video.getVideoPlaybackQuality?.();
   const onFrame = (now, meta) => {
     result.frames += 1;
     if (result.ttffMs === null) {
@@ -396,7 +411,7 @@ async function play(c, format, method) {
   // Play: to the end of a short clip, or PLAY_SECONDS past the first frame of a long one.
   const deadline = started + TIMEOUT_MS + (format.delay || 0) * 1000;
   let heard = false;
-  while (!failure && performance.now() < deadline && result.result !== 'blocked') {
+  while (!failure && !hidden && performance.now() < deadline && result.result !== 'blocked') {
     if (c.codecs.audio && !heard) heard = audioHeard() === true;
     const duration = Number.isFinite(video.duration) ? video.duration : Infinity;
     if (video.ended) { result.reachedEnd = true; break; }
@@ -441,8 +456,11 @@ async function play(c, format, method) {
   result.frames = frames;
   result.time = Math.round(video.currentTime * 100) / 100;
   const quality = video.getVideoPlaybackQuality?.();
-  if (quality && quality.totalVideoFrames) {
-    result.droppedPct = Math.round((quality.droppedVideoFrames / quality.totalVideoFrames) * 1000) / 10;
+  if (quality) {
+    const since = qualityBefore && quality.totalVideoFrames >= qualityBefore.totalVideoFrames ? qualityBefore : null;
+    const total = quality.totalVideoFrames - (since?.totalVideoFrames || 0);
+    const dropped = quality.droppedVideoFrames - (since?.droppedVideoFrames || 0);
+    if (total > 0) result.droppedPct = Math.round((dropped / total) * 1000) / 10;
   }
   if (c.codecs.audio) result.audio = heard;
   if (c.subtitles) {
@@ -452,6 +470,8 @@ async function play(c, format, method) {
     if (first) result.cueStart = Math.round(first.startTime * 100) / 100;
   }
   result.ms = Math.round(performance.now() - started);
+  document.removeEventListener('visibilitychange', onVisibility);
+  if (hidden) result.result = 'interrupted';
   reset();
   return result;
 }
@@ -666,8 +686,14 @@ async function runPlayback() {
     } else if (m.startsWith('-')) {
       r = { case: c.id, format: f.format, method: m.slice(1), result: 'unavailable' };
     } else {
-      $('now').textContent = `${c.id} · ${formatLabel(f.format)} · ${m}`;
-      r = await play(c, f, m);
+      do {
+        if (document.hidden) {
+          $('now').textContent = 'Paused: a hidden tab stops drawing video. Come back to this tab to continue.';
+          await visible();
+        }
+        $('now').textContent = `${c.id} · ${formatLabel(f.format)} · ${m}`;
+        r = await play(c, f, m);
+      } while (r.result === 'interrupted' && !stopping);
     }
     report.playback.push(r);
     cell(c, columnFor(m)).appendChild(playChip(r));

@@ -26,7 +26,8 @@ unmuted at volume 0 where the browser allows it (iOS ignores volume, so it stays
 one (~) when audio or cues are missing, the first cue isn't at 0.5 s, a seek to 80 % and back doesn't recover, playback
 didn't start at `EXT-X-START`, more than 5 % of frames dropped, or it played only muted. Each result records time to
 first frame. It fails on a `MediaError` or a fatal hls.js/dash.js error, and stalls when it doesn't get there in 20
-seconds. It does not judge how the picture looks — whether HDR is shown as HDR still takes eyes.
+seconds. A hidden tab stops drawing video, so a test the tab was hidden during is thrown away and run again once the
+tab is back. It does not judge how the picture looks — whether HDR is shown as HDR still takes eyes.
 
 The capability probe asks, for every clip's real codec string, `canPlayType`, `MediaSource.isTypeSupported` and
 `MediaCapabilities.decodingInfo` (with the HDR transfer, gamut and metadata type), plus a list of codec strings
