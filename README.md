@@ -80,7 +80,9 @@ player" is HLS handed to the browser's `<video>`; iPhone is iOS 26.6 WebKit, whe
 
 ¹ The short `vp9-p0` clip failed in Safari's own HLS player, but it carries Opus audio, and Opus in HLS fails there on
 its own. With AAC, Safari 18.6 on macOS played VP9 1080p30 and 1080p60 in its own player for 30 s; the iPhone hasn't
-had those clips yet.
+had those clips yet. The Den trailer stall that first pointed at VP9 on WebKit turned out not to be a codec problem:
+Den Web forced an hls.js level before the first fragment, and Safari is slow to start YouTube's fragmented MP4 files
+whatever their codec. Both are written up in oxyc/den#26, section A7.
 
 ## What is covered
 
