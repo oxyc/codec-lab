@@ -12,6 +12,8 @@ earlier results.
 | `2026-09-15/safari-macos.json` | Safari 18.6, macOS 15.7, Apple M4 | 7e49f36 | Native HLS started at `EXT-X-START` counts no presented frames and reads as stalled; see the note in den#26 §A6. |
 | `2026-09-15/chrome-macos-vp9-long.json` | Chrome 151, macOS 15.7, Apple M4 | 3f2475d | The 30 s VP9 1080p30 and 1080p60 clips only. |
 | `2026-09-15/safari-macos-vp9-long.json` | Safari 18.6, macOS 15.7, Apple M4 | 3f2475d | The same clips: every path played to the end, Safari's own HLS player included. |
+| `2026-09-15/safari-ios-vp9-long-file-only.json` | iPhone, Safari 26.6.1 | 57649d4 | The same clips in codecs mode, which tries only the MP4 file: refused, though the probe says "probably". |
+| `2026-09-15/safari-ios-vp9-long.json` | iPhone, Safari 26.6.1 | 57649d4 | The same clips, every path: own HLS player and hls.js played 30 s; the MP4 file is refused. `time` and `audio` read as on the Mac run. |
 | `2026-09-15/chrome-macos.json` | Chrome 151, macOS 15.7, Apple M4 | 7e49f36 | An earlier run the same day is not kept: its tab was hidden, which stops video drawing. |
 
 What these mean for Den is written up in [oxyc/den#26](https://github.com/oxyc/den/issues/26) §A6.

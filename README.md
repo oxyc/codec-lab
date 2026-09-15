@@ -57,7 +57,7 @@ player" is HLS handed to the browser's `<video>`; iPhone is iOS 26.6 WebKit, whe
 | AV1 4320p in HLS | ❌ | ✅ | ✅ |
 | AV1 High 4:4:4, VP9 4:4:4 | ❌ | ❌ | ✅ |
 | VP9 profiles 0 and 2 | ✅ WebM, hls.js; ❌ MP4; own player ❓ ¹ | ✅ WebM, MP4, hls.js, own player ¹ | ✅ |
-| VP9 1080p30 and 1080p60, 30 s at 6 Mbit/s, with AAC | ❓ not run | ✅ file, own player, hls.js | ✅ file, own player, hls.js |
+| VP9 1080p30 and 1080p60, 30 s at 6 Mbit/s, with AAC | ✅ own player, hls.js; ❌ file ² | ✅ file, own player, hls.js | ✅ file, own player, hls.js |
 | MPEG-4 Part 2 in MP4, ProRes 422 | ✅ | ✅ | ❌ |
 | MPEG-2 | ❌ | ✅ TS file only | ❌ |
 | Theora, AVI, FLV | ❌ | ❌ | ❌ |
@@ -79,10 +79,14 @@ player" is HLS handed to the browser's `<video>`; iPhone is iOS 26.6 WebKit, whe
 | Segment 1 10 s late | ❌ both players | ❌ both players | ✅ own player; ❌ hls.js |
 
 ¹ The short `vp9-p0` clip failed in Safari's own HLS player, but it carries Opus audio, and Opus in HLS fails there on
-its own. With AAC, Safari 18.6 on macOS played VP9 1080p30 and 1080p60 in its own player for 30 s; the iPhone hasn't
-had those clips yet. The Den trailer stall that first pointed at VP9 on WebKit turned out not to be a codec problem:
+its own. With AAC, Safari 18.6 on macOS and Safari 26.6.1 on the iPhone played VP9 1080p30 and 1080p60 in their own
+HLS player for 30 s. The Den trailer stall that first pointed at VP9 on WebKit turned out not to be a codec problem:
 Den Web forced an hls.js level before the first fragment, and Safari is slow to start YouTube's fragmented MP4 files
 whatever their codec. Both are written up in oxyc/den#26, section A7.
+
+² On the iPhone the MP4 file is refused with `MEDIA_ERR_SRC_NOT_SUPPORTED` although `canPlayType` answers "probably"
+and Media Capabilities calls it supported, smooth and power efficient. The same stream plays in HLS. The 60 fps clip
+presented about 48 frames a second in the own player and 55 in hls.js, with none reported dropped.
 
 ## What is covered
 
