@@ -35,6 +35,48 @@ The capability probe asks, for every clip's real codec string, `canPlayType`, `M
 `MediaCapabilities.decodingInfo` (with the HDR transfer, gamut and metadata type), plus a list of codec strings
 nothing here can encode yet (AC-4, MPEG-H, xHE-AAC, VVC, IAMF…).
 
+## Results so far
+
+From the reports in [`results/`](results/), 2026-09-15. ✅ plays · ❌ doesn't · 🔇 picture but no sound. "Own
+player" is HLS handed to the browser's `<video>`; iPhone is iOS 26.6 WebKit, where Safari and Brave matched.
+
+| | iPhone | Safari 18.6, Mac | Chrome 151, Mac |
+|---|---|---|---|
+| H.264 8-bit up to 2160p, 23.976–120 fps | ✅ | ✅ | ✅ |
+| H.264 High 10, High 4:4:4 | ✅ | ❌ | ✅ |
+| HEVC Main/Main 10, High tier, RExt, 8K | ✅ | ✅ | ✅ |
+| HEVC tagged `hev1`, as a file | ❌ (✅ in HLS) | ❌ (✅ in HLS) | ✅ |
+| HEVC in MPEG-TS HLS, own player | ❌ | ❌ | ❌ |
+| HDR10, HLG, HDR10+ (picture; HDR look not judged) | ✅ | ✅ | ✅ |
+| PQ master without `VIDEO-RANGE` or `FRAME-RATE`, own player | ❌ | ❌ | ✅ |
+| Dolby Vision 8.1, 8.4, 8.2 | ✅ | ✅ | ✅ base layer |
+| Dolby Vision 5 | ✅ | ✅ | ❌ in HLS |
+| Dolby Vision 7 | ❌ | ❌ | ❌ in HLS; base layer as a file |
+| AV1 up to 2160p, MP4 and HLS | ✅ | ✅ | ✅ |
+| AV1 in WebM | ✅ | ❌ | ✅ |
+| AV1 4320p in HLS | ❌ | ✅ | ✅ |
+| AV1 High 4:4:4, VP9 4:4:4 | ❌ | ❌ | ✅ |
+| VP9 profiles 0 and 2 | ✅ WebM, hls.js; ❌ MP4, own player | ✅ WebM, MP4, hls.js; ❌ own player | ✅ |
+| MPEG-4 Part 2 in MP4, ProRes 422 | ✅ | ✅ | ❌ |
+| MPEG-2 | ❌ | ✅ TS file only | ❌ |
+| Theora, AVI, FLV | ❌ | ❌ | ❌ |
+| Matroska | ❌ | ❌ | ✅ |
+| MPEG-TS and M2TS files (H.264) | ❌ | ✅ | ❌ |
+| AAC LC and HE-AAC, FLAC | ✅ | ✅ | ✅ |
+| AC-3, E-AC-3, ALAC | ✅ | ✅ | 🔇 file; ❌ HLS |
+| MP3 | 🔇 MP4 file; ❌ HLS | 🔇 MP4 file; ❌ HLS | ✅ file and TS HLS; ❌ hls.js |
+| Opus | 2.0 ✅ file and hls.js; 5.1 ❌; ❌ own player | 2.0 ✅ file and hls.js; 5.1 ❌; ❌ own player | ✅ |
+| DTS core, TrueHD | 🔇 DTS in MP4; TrueHD in Matroska ❌ | 🔇 DTS in MP4; TrueHD in Matroska ❌ | 🔇 |
+| Atmos in E-AC-3 JOC (Dolby's kit) | ✅ picture; sound not measurable | ✅ picture; sound not measurable | ❌ (🔇 in dash.js) |
+| WebVTT | ✅ | ✅ | ✅ `<track>` and hls.js; own player hides it |
+| SRT, ASS, VobSub, PGS, `mov_text` | ❌ no cues | ❌ no cues | plays, no cues |
+| `EXT-X-START`, own player | ✅ | ❓ clock moves, no frames counted | ❌ starts at 0 |
+| `EXT-X-START`, hls.js | ✅ | ✅ | ✅ |
+| den-remux resume, H.264 / HDR10 HEVC, hls.js | ✅ / ✅ | ✅ / ❌ | ✅ / ✅ |
+| `init.mp4` late, own player | ❌ from 3 s | ✅ 6 s; ❌ 10 s | ✅ 10 s |
+| `init.mp4` late, hls.js | ✅ 6 s; ❌ 10 s | ✅ 6 s; ❌ 10 s | ✅ 6 s; ❌ 10 s |
+| Segment 1 10 s late | ❌ both players | ❌ both players | ✅ own player; ❌ hls.js |
+
 ## What is covered
 
 - **H.264**: Constrained Baseline, Main, High at levels 3.0–5.1 up to 2160p, High 10, High 4:2:2, High 4:4:4.
@@ -59,7 +101,8 @@ nothing here can encode yet (AC-4, MPEG-H, xHE-AAC, VVC, IAMF…).
 - **HDR signalling faults one at a time**: masters with no `VIDEO-RANGE`, no `FRAME-RATE`, or neither, and an HDR10
   file whose container names no colours (only the SPS does).
 - **Slow responses**: `docs/sw.js`, a service worker, holds back `init.mp4` for 3, 6 or 10 seconds, or segment 1 for
-  10; where a player doesn't fetch through it, the result is marked unmeasured.
+  10, beside a pass-through that holds nothing, so a player that can't play through a service worker at all shows
+  up there; where a player doesn't fetch through it, the result is marked unmeasured.
 - **From elsewhere**: Atmos in E-AC-3 (Dolby's delivery-kit test signal as a file, HLS and DASH, and Apple's
   Dolby Vision + Atmos HLS example), DTS Express and DTS-HD High Resolution (DASH-IF test vectors), all played from
   where they are hosted; DTS:X for streaming (`dtsx`), committed from shaka-packager's BSD-licensed test data.
