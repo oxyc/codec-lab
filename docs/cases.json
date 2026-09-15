@@ -912,6 +912,70 @@
    ]
   },
   {
+   "id": "hevc-dv-p82",
+   "group": "dolby-vision",
+   "title": "Dolby Vision profile 8.2 (SDR base layer), 1080p",
+   "note": "The RPU maps identically: it signals 8.2 without a real SDR-to-HDR grade.",
+   "codecs": {
+    "video": {
+     "base": "hvc1.2.4.L123.90",
+     "dolby_vision": "dvh1.08.04",
+     "compat": 2
+    },
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-dv-p82/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.L123.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-dv-p82/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "hevc-dv-p7",
+   "group": "dolby-vision",
+   "title": "Dolby Vision profile 7 (dual layer, MEL), 1080p",
+   "note": "A UHD Blu-ray's layout: an HDR10 base layer, a quarter-size enhancement layer, and dovi_tool's MIT-licensed profile 7 test RPU on every frame. HLS has no profile 7, so its master names only the base.",
+   "codecs": {
+    "video": {
+     "base": "hvc1.2.4.L123.90",
+     "dolby_vision": "dvh1.07.04",
+     "compat": 6
+    },
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "PQ",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-dv-p7/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.L123.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-dv-p7/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
    "id": "av1-main10-pq",
    "group": "hdr",
    "title": "AV1 Main 10-bit HDR10 (PQ), 1080p",
@@ -2296,6 +2360,124 @@
      "mime": "video/mp4; codecs=\"avc1.4D401E,mp4a.40.2\""
     }
    ]
+  },
+  {
+   "id": "subs-vobsub",
+   "group": "subtitles",
+   "title": "VobSub (DVD bitmap subtitles) inside Matroska",
+   "note": "Rendered from the same cues by spumux (dvdauthor).",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": "vobsub",
+   "formats": [
+    {
+     "format": "mkv",
+     "url": "media/subs-vobsub/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "subs-pgs",
+   "group": "subtitles",
+   "title": "PGS (Blu-ray bitmap subtitles) inside Matroska",
+   "note": "Rendered from the same cues by tsMuxeR.",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": "pgs",
+   "formats": [
+    {
+     "format": "mkv",
+     "url": "media/subs-pgs/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "external-vc1-advanced",
+   "group": "external",
+   "title": "VC-1 Advanced Profile, 720\u00d7480 interlaced (raw stream)",
+   "note": "FFmpeg FATE sample SA10143, linked from fate-suite.ffmpeg.org.",
+   "codecs": {
+    "video": "vc-1",
+    "audio": null
+   },
+   "video_range": "SDR",
+   "width": 720,
+   "height": 480,
+   "fps": 0,
+   "audio_channels": 0,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "raw",
+     "url": "https://fate-suite.ffmpeg.org/vc1/SA10143.vc1",
+     "mime": "video/mp4; codecs=\"vc-1\""
+    }
+   ],
+   "external": true
+  },
+  {
+   "id": "external-truehd-atmos",
+   "group": "external",
+   "title": "Dolby TrueHD with Atmos, 7.1 (raw stream, under a second)",
+   "note": "FFmpeg FATE sample truehd/atmos.thd, linked from fate-suite.ffmpeg.org.",
+   "codecs": {
+    "video": null,
+    "audio": "mlpa"
+   },
+   "video_range": "SDR",
+   "width": 0,
+   "height": 0,
+   "fps": 0,
+   "audio_channels": 8,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "raw",
+     "url": "https://fate-suite.ffmpeg.org/truehd/atmos.thd",
+     "mime": "audio/mp4; codecs=\"mlpa\""
+    }
+   ],
+   "external": true
+  },
+  {
+   "id": "external-dts-hd-ma",
+   "group": "external",
+   "title": "DTS-HD Master Audio 7.1, 24-bit (raw stream)",
+   "note": "FFmpeg FATE sample dts/master_audio_7.1_24bit.dts (6.3 MB), linked from fate-suite.ffmpeg.org.",
+   "codecs": {
+    "video": null,
+    "audio": "dtsl"
+   },
+   "video_range": "SDR",
+   "width": 0,
+   "height": 0,
+   "fps": 0,
+   "audio_channels": 8,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "raw",
+     "url": "https://fate-suite.ffmpeg.org/dts/master_audio_7.1_24bit.dts",
+     "mime": "audio/mp4; codecs=\"dtsl\""
+    }
+   ],
+   "external": true
   }
  ]
 }

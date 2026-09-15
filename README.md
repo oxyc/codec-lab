@@ -30,20 +30,24 @@ nothing here can encode yet (AC-4, MPEG-H, xHE-AAC, VVC, IAMF…).
 - **Frame rates**: 23.976, 25, 29.97, 50, 59.94, 120.
 - **HEVC**: Main and Main 10, `hvc1` and `hev1`, Main and High tier, up to 4320p, RExt 4:2:2 10-bit and 4:4:4.
 - **HDR**: HDR10 (PQ with mastering metadata) and HLG in HEVC, AV1 and VP9; HDR10+ dynamic metadata in HEVC;
-  Dolby Vision profiles 5, 8.1 and 8.4 (RPUs generated with `dovi_tool`, muxed by GPAC); an HLS master with no
-  `VIDEO-RANGE` or `FRAME-RATE`, which Safari handles differently.
+  Dolby Vision profiles 5, 8.1, 8.2 and 8.4 (RPUs generated with `dovi_tool`, muxed by GPAC) and profile 7 dual
+  layer (a MEL built from `dovi_tool`'s MIT-licensed test RPU); an HLS master with no `VIDEO-RANGE` or
+  `FRAME-RATE`, which Safari handles differently.
 - **AV1**: Main 8- and 10-bit up to 4320p, High 4:4:4.
 - **VP9** profiles 0, 1 and 2; **VP8**, **Theora**, **MPEG-4 Part 2**, **MPEG-2**, **ProRes 422**.
 - **Audio**: AAC-LC 2.0/5.1/7.1, HE-AAC v1 and v2, MP3, Opus 2.0/5.1, Vorbis, FLAC 2.0/5.1, ALAC, AC-3 2.0/5.1,
   E-AC-3 5.1/7.1, DTS 5.1, TrueHD 5.1, PCM.
 - **Subtitles**: WebVTT as an HLS rendition (fMP4 and TS) and as a `<track>`; SRT as a `<track>`; SRT and ASS
-  inside Matroska; 3GPP timed text inside MP4.
+  inside Matroska; 3GPP timed text inside MP4; VobSub (rendered by `spumux`) and PGS (rendered by tsMuxeR) inside
+  Matroska.
+- **Linked, not copied**: VC-1 Advanced Profile, TrueHD with Atmos and DTS-HD Master Audio, as raw streams from
+  FFmpeg's FATE suite (fate-suite.ffmpeg.org). Those samples state no licence, so the page plays them from there.
 - **Containers**: MP4 (progressive), HLS with fMP4 and MPEG-TS segments, DASH (through
   [dash.js](https://github.com/Dash-Industry-Forum/dash.js)), WebM, Matroska, Ogg, QuickTime, AVI, MPEG-TS and M2TS
   files, FLV.
 
-Not yet covered, because nothing here can encode it: VC-1, Dolby Vision profiles 7 and 8.2, Atmos (E-AC-3 JOC and
-TrueHD), DTS-HD Master Audio and DTS:X, PGS and VobSub subtitles. The capability probe still asks about the codecs.
+Not covered, because no free encoder or freely usable sample exists: Atmos in E-AC-3 (JOC) and DTS:X. The capability
+probe still asks about both.
 
 ## Page options
 
@@ -60,7 +64,8 @@ python3 generate.py hevc- av1- # cases whose id starts with any argument
 ```
 
 Needs ffmpeg with libx264, libx265, libsvtav1, libaom, libvpx, libopus, libvorbis, libmp3lame and libtheora; on
-macOS, AudioToolbox's `aac_at` for HE-AAC. Dolby Vision also needs `dovi_tool` and GPAC's `MP4Box`, used from the
-PATH or through `nix shell`. Codec strings in `docs/cases.json` are read back out of the files, not typed in.
+macOS, AudioToolbox's `aac_at` for HE-AAC. Dolby Vision and HDR10+ also need `dovi_tool`, `hdr10plus_tool` and
+GPAC's `MP4Box`, VobSub needs dvdauthor's `spumux` — each used from the PATH or through `nix shell` — and PGS needs
+tsMuxeR (not in nixpkgs: `$TSMUXER`, the PATH, or its release binary at `tools/tsMuxeR`). Codec strings in `docs/cases.json` are read back out of the files, not typed in.
 
 hls.js is vendored in `docs/vendor` under its Apache-2.0 license.

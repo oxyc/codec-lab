@@ -99,7 +99,7 @@ const TRANSFER = { PQ: 'pq', HLG: 'hlg', SDR: 'srgb' };
 
 function videoString(c) {
   const v = c.codecs.video;
-  return typeof v === 'string' ? v : v.base;
+  return !v || typeof v === 'string' ? v : v.base;
 }
 
 async function decodingInfo(config) {
@@ -128,17 +128,19 @@ async function probe(c) {
     out.canPlayType = video.canPlayType(type);
     out.mse = mseSupports(type);
   }
-  const container = type ? type.split(';')[0] : 'video/mp4';
-  const videoConfig = {
-    contentType: `${container}; codecs="${vstr}"`,
-    width: c.width, height: c.height, bitrate: 4_000_000, framerate: c.fps,
-    transferFunction: TRANSFER[c.video_range], colorGamut: c.video_range === 'SDR' ? 'srgb' : 'rec2020',
-  };
-  if (c.video_range === 'PQ') videoConfig.hdrMetadataType = 'smpteSt2086';
-  out.mediaCapabilities = {
-    file: await decodingInfo({ type: 'file', video: videoConfig }),
-    mediaSource: await decodingInfo({ type: 'media-source', video: videoConfig }),
-  };
+  const container = type ? type.split(';')[0].replace('audio/', 'video/') : 'video/mp4';
+  if (vstr) {
+    const videoConfig = {
+      contentType: `${container}; codecs="${vstr}"`,
+      width: c.width, height: c.height, bitrate: 4_000_000, framerate: c.fps || 30,
+      transferFunction: TRANSFER[c.video_range], colorGamut: c.video_range === 'SDR' ? 'srgb' : 'rec2020',
+    };
+    if (c.video_range === 'PQ') videoConfig.hdrMetadataType = 'smpteSt2086';
+    out.mediaCapabilities = {
+      file: await decodingInfo({ type: 'file', video: videoConfig }),
+      mediaSource: await decodingInfo({ type: 'media-source', video: videoConfig }),
+    };
+  }
   if (c.codecs.audio) {
     const audioType = `${container.replace('video/', 'audio/')}; codecs="${c.codecs.audio}"`;
     out.audio = {
@@ -278,7 +280,10 @@ function play(c, format, method) {
       for (const t of video.textTracks) t.mode = 'hidden';
     };
 
+    // A clip with no picture passes on its sound: decoded bytes or a signal, or time advancing where neither is known.
+    const audioOnly = !c.codecs.video;
     const passed = () => {
+      if (audioOnly) return heard || audioHeard() === true || (audioProbe?.kind === 'none' && video.currentTime >= 0.5);
       const frames = 'requestVideoFrameCallback' in video
         ? result.frames : (video.getVideoPlaybackQuality?.().totalVideoFrames || 0);
       return video.videoWidth > 0 && (frames >= FRAMES_TO_PASS || (frames === 0 && video.currentTime >= 1.5));
@@ -287,7 +292,7 @@ function play(c, format, method) {
       if (c.codecs.audio && !heard) heard = audioHeard() === true;
       const subsReady = !c.subtitles || [...video.textTracks].some((t) => t.cues && t.cues.length > 0);
       const audioReady = !c.codecs.audio || heard || audioProbe?.kind === 'none';
-      if (passed() && video.currentTime >= 2 && subsReady && audioReady) finish('played');
+      if (passed() && (audioOnly || video.currentTime >= 2) && subsReady && audioReady) finish('played');
     }, 250);
     const timer = setTimeout(() => finish(passed() ? 'played' : video.error ? 'failed' : 'stalled'), PLAY_TIMEOUT_MS);
 
@@ -393,7 +398,7 @@ function row(c) {
     }
     const v = c.codecs.video;
     tr.querySelector('.codecs').textContent = [
-      typeof v === 'string' ? v : `${v.base} + ${v.dolby_vision}`, c.codecs.audio,
+      !v || typeof v === 'string' ? v : `${v.base} + ${v.dolby_vision}`, c.codecs.audio,
     ].filter(Boolean).join(', ');
   }
   return tr;

@@ -20,6 +20,7 @@ import shutil
 import struct
 import subprocess
 import sys
+import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -29,6 +30,9 @@ MEDIA = DOCS / "media"
 WORK = ROOT / "work"
 SECONDS = 4
 FONT = "/System/Library/Fonts/Supplemental/Arial.ttf"
+# One frame of a real profile 7 MEL RPU, from dovi_tool's test assets (MIT).
+DOVI_P7_RPU = "https://raw.githubusercontent.com/quietvoid/dovi_tool/main/assets/tests/mel_orig.bin"
+FATE = "https://fate-suite.ffmpeg.org"
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -70,8 +74,14 @@ class Case:
     formats: list = field(default_factory=list)
     note: str = ""
     # "webvtt" (an HLS rendition and a <track>), "srt-sidecar" (a <track> naming an .srt), or a subtitle stream
-    # inside the file: "subrip", "ass", "mov_text".
+    # inside the file: "subrip", "ass", "mov_text", "vobsub", "pgs".
     subtitles: str = None
+    # Played from where it lives rather than made here: the page's format entries, the codec strings, the picture's
+    # size (0×0 for audio) and the channel count.
+    external: list = None
+    codecs: dict = None
+    dims: tuple = (0, 0)
+    channels: int = 0
 
 
 AAC = Audio("aac", args=["-b:a", "128k"])
@@ -171,16 +181,22 @@ CASES = [
          x265("profile=main10:level-idc=41:" + HLG_PARAMS, "yuv420p10le", (1920, 1080), **HLG), AAC,
          MP4_FAMILY + ["hls-fmp4-bare"]),
     *[
-        Case(f"hevc-dv-p{p.replace('.', '')}", "dolby-vision", f"Dolby Vision profile {p}, 1080p",
+        Case(f"hevc-dv-p{p.replace('.', '')}", "dolby-vision", f"Dolby Vision profile {p}{detail}, 1080p",
              Video("libx265", (1920, 1080), "30", "yuv420p10le",
                    ["-preset", "fast", "-crf", "30", "-x265-params",
-                    "log-level=error:high-tier=0:profile=main10:level-idc=41:"
-                    + (HLG_PARAMS if p == "8.4" else HDR10_PARAMS)],
-                   **(HLG if p == "8.4" else PQ), dovi=p),
-             AAC, MP4_FAMILY,
-             note=("Profile 5's base layer is meant to be IPTPQc2, so its picture is off in colour here; what is "
-                   "tested is whether it plays." if p == "5" else ""))
-        for p in ["5", "8.1", "8.4"]
+                    "log-level=error:high-tier=0:profile=main10:level-idc=41" + params], **colour, dovi=p),
+             AAC, MP4_FAMILY, note=note)
+        for p, detail, params, colour, note in [
+            ("5", "", ":" + HDR10_PARAMS, PQ, "Profile 5's base layer is meant to be IPTPQc2, so its picture is off in "
+                                             "colour here; what is tested is whether it plays."),
+            ("8.1", "", ":" + HDR10_PARAMS, PQ, ""),
+            ("8.4", "", ":" + HLG_PARAMS, HLG, ""),
+            ("8.2", " (SDR base layer)", "", {}, "The RPU maps identically: it signals 8.2 without a real SDR-to-HDR "
+                                                "grade."),
+            ("7", " (dual layer, MEL)", ":" + HDR10_PARAMS, PQ,
+             "A UHD Blu-ray's layout: an HDR10 base layer, a quarter-size enhancement layer, and dovi_tool's "
+             "MIT-licensed profile 7 test RPU on every frame. HLS has no profile 7, so its master names only the base."),
+        ]
     ],
     Case("av1-main10-pq", "hdr", "AV1 Main 10-bit HDR10 (PQ), 1080p",
          svt("yuv420p10le", (1920, 1080), params="color-primaries=9:transfer-characteristics=16:matrix-coefficients=9",
@@ -281,6 +297,25 @@ CASES = [
          ["mkv"], subtitles="ass"),
     Case("subs-mov-text", "subtitles", "3GPP timed text (mov_text) inside MP4", x264("main", "3.0", size=(640, 360)),
          AAC, ["mp4"], subtitles="mov_text"),
+    Case("subs-vobsub", "subtitles", "VobSub (DVD bitmap subtitles) inside Matroska", x264("main", "3.0", size=(640, 360)),
+         AAC, ["mkv"], subtitles="vobsub", note="Rendered from the same cues by spumux (dvdauthor)."),
+    Case("subs-pgs", "subtitles", "PGS (Blu-ray bitmap subtitles) inside Matroska", x264("main", "3.0", size=(640, 360)),
+         AAC, ["mkv"], subtitles="pgs", note="Rendered from the same cues by tsMuxeR."),
+    # --- Linked from FFmpeg's FATE suite ---------------------------------------------------------------------------
+    # Nothing free encodes these, and FATE's samples carry no licence, so they are played from fate-suite.ffmpeg.org
+    # rather than copied here. They are raw elementary streams: a browser has to take them without a container.
+    Case("external-vc1-advanced", "external", "VC-1 Advanced Profile, 720×480 interlaced (raw stream)",
+         external=[{"format": "raw", "url": f"{FATE}/vc1/SA10143.vc1", "mime": 'video/mp4; codecs="vc-1"'}],
+         codecs={"video": "vc-1", "audio": None}, dims=(720, 480),
+         note="FFmpeg FATE sample SA10143, linked from fate-suite.ffmpeg.org."),
+    Case("external-truehd-atmos", "external", "Dolby TrueHD with Atmos, 7.1 (raw stream, under a second)",
+         external=[{"format": "raw", "url": f"{FATE}/truehd/atmos.thd", "mime": 'audio/mp4; codecs="mlpa"'}],
+         codecs={"video": None, "audio": "mlpa"}, channels=8,
+         note="FFmpeg FATE sample truehd/atmos.thd, linked from fate-suite.ffmpeg.org."),
+    Case("external-dts-hd-ma", "external", "DTS-HD Master Audio 7.1, 24-bit (raw stream)",
+         external=[{"format": "raw", "url": f"{FATE}/dts/master_audio_7.1_24bit.dts", "mime": 'audio/mp4; codecs="dtsl"'}],
+         codecs={"video": None, "audio": "dtsl"}, channels=8,
+         note="FFmpeg FATE sample dts/master_audio_7.1_24bit.dts (6.3 MB), linked from fate-suite.ffmpeg.org."),
 ]
 
 
@@ -344,6 +379,8 @@ def encode(case, out):
         audio = ["-map", "1:a", "-c:a", a.encoder, "-ac", str(a.channels), "-ar", str(a.rate), *a.args]
     if v.hdr10plus:
         return encode_hdr10plus(case, inputs, video, audio, out)
+    if case.subtitles in ("vobsub", "pgs"):
+        return encode_bitmap_subtitles(case, inputs, video, audio, out)
     subtitles = []
     if case.subtitles in ("subrip", "ass", "mov_text"):
         # Matroska carries SubRip and ASS as they are; mov_text goes into it as SubRip and becomes mov_text in the MP4.
@@ -357,6 +394,54 @@ def encode(case, out):
         return encode_dovi(case, inputs, video, audio, out)
     run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", *inputs, *video, *audio, *subtitles, "-t", SECONDS, out])
     return out
+
+
+def encode_bitmap_subtitles(case, inputs, video, audio, out):
+    """Bitmap subtitles rendered from the same cues as the text ones, beside the case's own video and audio: VobSub by
+    `spumux` (dvdauthor) over a DVD-shaped MPEG-2 stream, PGS by tsMuxeR into an M2TS."""
+    work = out.parent
+    av = work / "av.mkv"
+    run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", *inputs, *video, *audio, "-t", SECONDS, av])
+    srt = work / "cues.srt"
+    srt.write_text(SRT_EARLY)
+    w, h = case.video.size
+    fps = f"{fps_value(case.video.fps):g}"
+    if case.subtitles == "vobsub":
+        dvd = work / "dvd.mpg"
+        run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-f", "lavfi", "-i",
+             f"testsrc2=size=720x576:rate=25:duration={SECONDS}", "-c:v", "mpeg2video", "-f", "dvd", dvd])
+        xml = work / "spu.xml"
+        xml.write_text(
+            f'<subpictures format="PAL"><stream><textsub filename="{srt}" font="{FONT}" fontsize="28" '
+            'horizontal-alignment="center" vertical-alignment="bottom" bottom-margin="40" subtitle-fps="25" '
+            'movie-fps="25" movie-width="720" movie-height="576"/></stream></subpictures>')
+        subbed = work / "dvd-subs.mpg"
+        with open(dvd, "rb") as source, open(subbed, "wb") as sink:
+            run([*tool("spumux", "dvdauthor"), "-m", "dvd", xml], stdin=source, stdout=sink)
+        # Re-encoded rather than copied, so the Matroska track gets VobSub's palette and size header.
+        subs, codec = subbed, ["-c:s", "dvdsub"]
+    else:
+        h264 = work / "video.h264"
+        run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", av, "-map", "0:v", "-c", "copy",
+             "-bsf:v", "h264_mp4toannexb", "-f", "h264", h264])
+        meta = work / "pgs.meta"
+        meta.write_text(
+            "MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr --vbv-len=500\n"
+            f'V_MPEG4/ISO/AVC, "{h264}", fps={fps}\n'
+            f'S_TEXT/UTF8, "{srt}", font-name="Arial", font-size={max(h // 17, 16)}, font-color=0xffffffff, '
+            f"bottom-offset=24, font-border=3, text-align=center, video-width={w}, video-height={h}, fps={fps}, "
+            "lang=eng\n")
+        m2ts = work / "pgs.m2ts"
+        run([tsmuxer(), meta, m2ts])
+        subs, codec = m2ts, ["-c:s", "copy"]
+    run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", av, "-i", subs, "-map", "0:v", "-map", "0:a?",
+         "-map", "1:s", "-c", "copy", *codec, "-metadata:s:s:0", "language=eng", out])
+    return out
+
+
+def tsmuxer():
+    """tsMuxeR isn't in nixpkgs: $TSMUXER, the PATH, or tools/tsMuxeR (its GitHub release binary, not committed)."""
+    return os.environ.get("TSMUXER") or shutil.which("tsMuxeR") or str(ROOT / "tools" / "tsMuxeR")
 
 
 def encode_hdr10plus(case, inputs, video, audio, out):
@@ -403,28 +488,51 @@ def hdr10plus_metadata(frames):
 
 
 def encode_dovi(case, inputs, video, audio, out):
-    """Dolby Vision: the HDR10 or HLG base layer, an RPU generated for every frame injected into it, and an MP4 whose
-    sample entry and dvcC name the profile."""
+    """Dolby Vision: the base layer (HDR10, HLG or SDR), an RPU for every frame injected into it — for profile 7, into
+    an enhancement layer muxed beside it — and an MP4 whose sample entry and dvcC name the profile."""
     work = out.parent
+    dovi = case.video.dovi
+    dovi_tool = tool("dovi_tool", "dovi-tool")
     raw = work / "base.hevc"
     run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", *inputs, *video, "-t", SECONDS, "-f", "hevc", raw])
     frames = int(SECONDS * fps_value(case.video.fps))
-    config = work / "dovi.json"
-    config.write_text(json.dumps({
-        "cm_version": "V40", "length": frames,
-        "level6": {"max_display_mastering_luminance": 1000, "min_display_mastering_luminance": 50,
-                   "max_content_light_level": 1000, "max_frame_average_light_level": 400},
-    }))
     rpu = work / "rpu.bin"
-    run([*tool("dovi_tool", "dovi-tool"), "generate", "-j", config, "-p", case.video.dovi, "-o", rpu])
+    if dovi == "7":
+        # dovi_tool generates no profile 7 RPU; its test asset is one frame of a real one (MEL), repeated for each frame.
+        single = work / "mel_orig.bin"
+        urllib.request.urlretrieve(DOVI_P7_RPU, single)
+        duplicate = work / "duplicate.json"
+        duplicate.write_text(json.dumps({"duplicate": [{"source": 0, "offset": 0, "length": frames - 1}]}))
+        run([*dovi_tool, "editor", "-i", single, "-j", duplicate, "-o", rpu])
+    else:
+        config = work / "dovi.json"
+        config.write_text(json.dumps({
+            "cm_version": "V40", "length": frames,
+            "level6": {"max_display_mastering_luminance": 1000, "min_display_mastering_luminance": 50,
+                       "max_content_light_level": 1000, "max_frame_average_light_level": 400},
+        }))
+        # dovi_tool generates 5, 8.1 and 8.4; an 8.2 is an 8.1 RPU on an SDR base, signalled as 8.2 in its dvcC.
+        run([*dovi_tool, "generate", "-j", config, "-p", "8.1" if dovi == "8.2" else dovi, "-o", rpu])
     injected = work / "dv.hevc"
-    run([*tool("dovi_tool", "dovi-tool"), "inject-rpu", "-i", raw, "--rpu-in", rpu, "-o", injected])
-    profile = case.video.dovi.split(".")[0]
-    compat = {"5": 0, "8.1": 1, "8.4": 4}[case.video.dovi]
+    if dovi == "7":
+        # The enhancement layer: flat grey at a quarter of the size, on the base layer's frame rate and keyframes.
+        w, h = case.video.size
+        gop = max(round(fps_value(case.video.fps)), 1)
+        el = work / "el.hevc"
+        run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-f", "lavfi", "-i",
+             f"color=c=0x808080:size={w // 2}x{h // 2}:rate={case.video.fps}:duration={SECONDS}", "-c:v", "libx265",
+             "-pix_fmt", "yuv420p10le", "-preset", "fast",
+             "-x265-params", f"log-level=error:keyint={gop}:min-keyint={gop}:scenecut=0", "-f", "hevc", el])
+        el_rpu = work / "el-rpu.hevc"
+        run([*dovi_tool, "inject-rpu", "-i", el, "--rpu-in", rpu, "-o", el_rpu])
+        run([*dovi_tool, "mux", "--bl", raw, "--el", el_rpu, "-o", injected])
+    else:
+        run([*dovi_tool, "inject-rpu", "-i", raw, "--rpu-in", rpu, "-o", injected])
+    profile, compat = {"5": ("5", 0), "8.1": ("8", 1), "8.4": ("8", 4), "8.2": ("8", 2), "7": ("7", 6)}[dovi]
+    colour_mapping = {"5": ":dv-cm=hdr10", "8.1": ":dv-cm=hdr10", "8.4": ":dv-cm=hlg"}.get(dovi, "")
     video_only = work / "dv.mp4"
     run([*tool("MP4Box", "gpac"), "-quiet", "-add",
-         f"{injected}:fps={case.video.fps}:dvp={profile}.{compat}:dv-cm={'hdr10' if compat != 4 else 'hlg'}",
-         "-new", video_only])
+         f"{injected}:fps={case.video.fps}:dvp={profile}.{compat}{colour_mapping}", "-new", video_only])
     if audio:
         tone = work / "audio.mka"
         run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", *inputs, *[x.replace("1:a", "1:a") for x in audio],
@@ -604,7 +712,8 @@ def master_playlist(case, codecs, bandwidth, media, *, bare=False, audio_group=T
     supplemental = ""
     if isinstance(video_codec, dict):
         brand = {1: "db1p", 4: "db4h", 2: "db2g"}.get(video_codec["compat"], "")
-        supplemental = f',SUPPLEMENTAL-CODECS="{video_codec["dolby_vision"]}/{brand}"'
+        # Profile 7 has no HLS brand: its master names only the base layer.
+        supplemental = f',SUPPLEMENTAL-CODECS="{video_codec["dolby_vision"]}/{brand}"' if brand else ""
         video_codec = video_codec["base"]
     names = [c for c in [video_codec, codecs.get("audio")] if c]
     lines = ["#EXTM3U", "#EXT-X-VERSION:7", "#EXT-X-INDEPENDENT-SEGMENTS"]
@@ -646,6 +755,16 @@ The first cue.
 The second cue.
 """
 
+# The same cues ending well before the clip does: tsMuxeR drops a cue that runs to the end of the video.
+SRT_EARLY = """1
+00:00:00,500 --> 00:00:01,800
+The first cue.
+
+2
+00:00:02,000 --> 00:00:03,200
+The second cue.
+"""
+
 ASS = """[Script Info]
 ScriptType: v4.00+
 PlayResX: 640
@@ -663,6 +782,12 @@ Dialogue: 0,0:00:02.00,0:00:03.80,Default,,0,0,0,,The second cue, in yellow.
 
 
 def package(case):
+    if case.external:
+        return {
+            "id": case.id, "group": case.group, "title": case.title, "note": case.note, "codecs": case.codecs,
+            "video_range": "SDR", "width": case.dims[0], "height": case.dims[1], "fps": 0,
+            "audio_channels": case.channels, "subtitles": None, "formats": case.external, "external": True,
+        }
     work = WORK / case.id
     out = MEDIA / case.id
     shutil.rmtree(out, ignore_errors=True)
