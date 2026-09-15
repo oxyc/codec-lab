@@ -1,0 +1,360 @@
+{
+ "lab": "codec-lab",
+ "started": "2026-09-15T15:11:11.398Z",
+ "env": {
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15",
+  "platform": "MacIntel",
+  "maxTouchPoints": 0,
+  "ios": false,
+  "screen": "1512×982 @2x",
+  "dynamicRangeHigh": true,
+  "videoDynamicRangeHigh": false,
+  "colorGamut": "p3",
+  "mediaSource": true,
+  "managedMediaSource": true,
+  "nativeHls": "maybe",
+  "hlsJs": true,
+  "hlsJsVersion": "1.7.2",
+  "dashJs": true,
+  "requestVideoFrameCallback": true,
+  "gpu": "Apple GPU",
+  "serviceWorker": true
+ },
+ "capability": {
+  "vp9-p0-1080p30-long": {
+   "type": "video/mp4; codecs=\"vp09.00.40.08.01.02.02.01.00,mp4a.40.2\"",
+   "canPlayType": "probably",
+   "mse": true,
+   "mediaCapabilities": {
+    "file": {
+     "supported": true,
+     "smooth": true,
+     "powerEfficient": true
+    },
+    "mediaSource": {
+     "supported": true,
+     "smooth": true,
+     "powerEfficient": true
+    }
+   },
+   "audio": {
+    "type": "audio/mp4; codecs=\"mp4a.40.2\"",
+    "canPlayType": "probably",
+    "mse": true,
+    "mediaCapabilities": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": false
+    }
+   }
+  },
+  "vp9-p0-1080p60-long": {
+   "type": "video/mp4; codecs=\"vp09.00.40.08.01.02.02.01.00,mp4a.40.2\"",
+   "canPlayType": "probably",
+   "mse": true,
+   "mediaCapabilities": {
+    "file": {
+     "supported": true,
+     "smooth": true,
+     "powerEfficient": true
+    },
+    "mediaSource": {
+     "supported": true,
+     "smooth": true,
+     "powerEfficient": true
+    }
+   },
+   "audio": {
+    "type": "audio/mp4; codecs=\"mp4a.40.2\"",
+    "canPlayType": "probably",
+    "mse": true,
+    "mediaCapabilities": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": false
+    }
+   }
+  }
+ },
+ "playback": [
+  {
+   "case": "vp9-p0-1080p30-long",
+   "format": "mp4",
+   "method": "file",
+   "url": "media/vp9-p0-1080p30-long/clip.mp4",
+   "result": "played",
+   "width": 1920,
+   "height": 1080,
+   "frames": 845,
+   "time": 0.75,
+   "ttffMs": 1089,
+   "droppedPct": 0,
+   "reachedEnd": false,
+   "audio": true,
+   "unmuted": true,
+   "error": null,
+   "ms": 30450,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 24,
+     "ok": true,
+     "ms": 603
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 605
+    }
+   ]
+  },
+  {
+   "case": "vp9-p0-1080p30-long",
+   "format": "hls-fmp4",
+   "method": "native",
+   "url": "media/vp9-p0-1080p30-long/hls/master.m3u8",
+   "result": "played",
+   "width": 1920,
+   "height": 1080,
+   "frames": 841,
+   "time": 0.69,
+   "ttffMs": 936,
+   "droppedPct": 0,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 29637,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 24,
+     "ok": true,
+     "ms": 303
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 302
+    }
+   ]
+  },
+  {
+   "case": "vp9-p0-1080p30-long",
+   "format": "hls-fmp4",
+   "method": "hls.js",
+   "url": "media/vp9-p0-1080p30-long/hls/master.m3u8",
+   "result": "played",
+   "width": 1920,
+   "height": 1080,
+   "frames": 1681,
+   "time": 0.62,
+   "ttffMs": 896,
+   "droppedPct": 0,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 29345,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 24,
+     "ok": true,
+     "ms": 201
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 201
+    }
+   ]
+  },
+  {
+   "case": "vp9-p0-1080p60-long",
+   "format": "mp4",
+   "method": "file",
+   "url": "media/vp9-p0-1080p60-long/clip.mp4",
+   "result": "played",
+   "width": 1920,
+   "height": 1080,
+   "frames": 1507,
+   "time": 0.75,
+   "ttffMs": 1261,
+   "droppedPct": 0,
+   "reachedEnd": false,
+   "audio": true,
+   "unmuted": true,
+   "error": null,
+   "ms": 30523,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 24,
+     "ok": true,
+     "ms": 602
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 603
+    }
+   ]
+  },
+  {
+   "case": "vp9-p0-1080p60-long",
+   "format": "hls-fmp4",
+   "method": "native",
+   "url": "media/vp9-p0-1080p60-long/hls/master.m3u8",
+   "result": "played",
+   "width": 1920,
+   "height": 1080,
+   "frames": 1636,
+   "time": 0.66,
+   "ttffMs": 1820,
+   "droppedPct": 0,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 30414,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 24,
+     "ok": true,
+     "ms": 202
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 302
+    }
+   ]
+  },
+  {
+   "case": "vp9-p0-1080p60-long",
+   "format": "hls-fmp4",
+   "method": "hls.js",
+   "url": "media/vp9-p0-1080p60-long/hls/master.m3u8",
+   "result": "played",
+   "width": 1920,
+   "height": 1080,
+   "frames": 1683,
+   "time": 0.58,
+   "ttffMs": 503,
+   "droppedPct": 0,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 28974,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 24,
+     "ok": true,
+     "ms": 201
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 201
+    }
+   ]
+  }
+ ],
+ "extraTypes": {
+  "video/mp4; codecs=\"dvh1.05.06\"": {
+   "canPlayType": "probably",
+   "mse": true
+  },
+  "video/mp4; codecs=\"dvh1.08.06\"": {
+   "canPlayType": "probably",
+   "mse": true
+  },
+  "video/mp4; codecs=\"dvav.09.05\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "video/mp4; codecs=\"dav1.10.06\"": {
+   "canPlayType": "probably",
+   "mse": true
+  },
+  "video/mp4; codecs=\"vvc1.1.L123.CQA.O1+3\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "video/mp4; codecs=\"evc1\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "video/mp4; codecs=\"apv1\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"ec-3\"": {
+   "canPlayType": "probably",
+   "mse": true
+  },
+  "audio/mp4; codecs=\"ac-4.02.01.01\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"mp4a.40.42\"": {
+   "canPlayType": "probably",
+   "mse": true
+  },
+  "audio/mp4; codecs=\"mp4a.40.39\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"mhm1.0x0D\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"dtsx\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"dtse\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"iamf.001.001.Opus\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"apac\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"mlpa\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"alac\"": {
+   "canPlayType": "probably",
+   "mse": true
+  },
+  "audio/x-caf": {
+   "canPlayType": "maybe",
+   "mse": false
+  },
+  "audio/flac": {
+   "canPlayType": "maybe",
+   "mse": false
+  },
+  "audio/wav": {
+   "canPlayType": "maybe",
+   "mse": false
+  },
+  "audio/ogg; codecs=\"opus\"": {
+   "canPlayType": "probably",
+   "mse": false
+  }
+ },
+ "mode": "everything",
+ "audioUnmeasurable": [],
+ "finished": "2026-09-15T15:14:14.376Z"
+}

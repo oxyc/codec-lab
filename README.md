@@ -56,7 +56,8 @@ player" is HLS handed to the browser's `<video>`; iPhone is iOS 26.6 WebKit, whe
 | AV1 in WebM | ✅ | ❌ | ✅ |
 | AV1 4320p in HLS | ❌ | ✅ | ✅ |
 | AV1 High 4:4:4, VP9 4:4:4 | ❌ | ❌ | ✅ |
-| VP9 profiles 0 and 2 | ✅ WebM, hls.js; ❌ MP4, own player | ✅ WebM, MP4, hls.js; ❌ own player | ✅ |
+| VP9 profiles 0 and 2 | ✅ WebM, hls.js; ❌ MP4; own player ❓ ¹ | ✅ WebM, MP4, hls.js, own player ¹ | ✅ |
+| VP9 1080p30 and 1080p60, 30 s at 6 Mbit/s, with AAC | ❓ not run | ✅ file, own player, hls.js | ✅ file, own player, hls.js |
 | MPEG-4 Part 2 in MP4, ProRes 422 | ✅ | ✅ | ❌ |
 | MPEG-2 | ❌ | ✅ TS file only | ❌ |
 | Theora, AVI, FLV | ❌ | ❌ | ❌ |
@@ -76,6 +77,10 @@ player" is HLS handed to the browser's `<video>`; iPhone is iOS 26.6 WebKit, whe
 | `init.mp4` late, own player | ❌ from 3 s | ✅ 6 s; ❌ 10 s | ✅ 10 s |
 | `init.mp4` late, hls.js | ✅ 6 s; ❌ 10 s | ✅ 6 s; ❌ 10 s | ✅ 6 s; ❌ 10 s |
 | Segment 1 10 s late | ❌ both players | ❌ both players | ✅ own player; ❌ hls.js |
+
+¹ The short `vp9-p0` clip failed in Safari's own HLS player, but it carries Opus audio, and Opus in HLS fails there on
+its own. With AAC, Safari 18.6 on macOS played VP9 1080p30 and 1080p60 in its own player for 30 s; the iPhone hasn't
+had those clips yet.
 
 ## What is covered
 
