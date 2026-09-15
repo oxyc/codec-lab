@@ -1,5 +1,5 @@
 {
- "seconds": 4,
+ "seconds": 60,
  "cases": [
   {
    "id": "h264-baseline-30",
@@ -686,7 +686,7 @@
    "id": "hevc-main10-pq",
    "group": "hdr",
    "title": "HEVC Main 10 HDR10 (PQ), 1080p",
-   "note": "hls-fmp4-bare is the same stream with no VIDEO-RANGE or FRAME-RATE in its master playlist.",
+   "note": "The -bare, -no-range and -no-fps masters drop VIDEO-RANGE and FRAME-RATE together, then one at a time.",
    "codecs": {
     "video": "hvc1.2.4.L123.90",
     "audio": "mp4a.40.2"
@@ -696,6 +696,7 @@
    "height": 1080,
    "fps": 30.0,
    "audio_channels": 2,
+   "spatial": false,
    "subtitles": null,
    "formats": [
     {
@@ -714,6 +715,16 @@
      "mime": "application/vnd.apple.mpegurl"
     },
     {
+     "format": "hls-fmp4-no-range",
+     "url": "media/hevc-main10-pq/hls/master-no-range.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-fmp4-no-fps",
+     "url": "media/hevc-main10-pq/hls/master-no-fps.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
      "format": "dash",
      "url": "media/hevc-main10-pq/dash/manifest.mpd",
      "mime": "application/dash+xml"
@@ -723,7 +734,48 @@
      "url": "media/hevc-main10-pq/clip.mkv",
      "mime": "video/x-matroska; codecs=\"hvc1.2.4.L123.90,mp4a.40.2\""
     }
-   ]
+   ],
+   "seconds": 4
+  },
+  {
+   "id": "hevc-main10-pq-silent-container",
+   "group": "hdr",
+   "title": "HEVC Main 10 HDR10 (PQ) whose container names no colours, 1080p",
+   "note": "Like a UHD remux with no Matroska Colour element: only the SPS says PQ.",
+   "codecs": {
+    "video": "hvc1.2.4.L123.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "PQ",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main10-pq-silent-container/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.L123.90,mp4a.40.2\""
+    },
+    {
+     "format": "mkv",
+     "url": "media/hevc-main10-pq-silent-container/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"hvc1.2.4.L123.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main10-pq-silent-container/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-fmp4-no-range",
+     "url": "media/hevc-main10-pq-silent-container/hls/master-no-range.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ],
+   "seconds": 4
   },
   {
    "id": "hevc-main10-hdr10plus",
@@ -772,6 +824,7 @@
    "height": 2160,
    "fps": 30.0,
    "audio_channels": 2,
+   "spatial": false,
    "subtitles": null,
    "formats": [
     {
@@ -784,7 +837,8 @@
      "url": "media/hevc-main10-pq-2160p/hls/master.m3u8",
      "mime": "application/vnd.apple.mpegurl"
     }
-   ]
+   ],
+   "seconds": 4
   },
   {
    "id": "hevc-main10-hlg",
@@ -2408,10 +2462,381 @@
    ]
   },
   {
+   "id": "h264-open-gop",
+   "group": "gop",
+   "title": "H.264 High, open GOP, played from mid-clip",
+   "note": "",
+   "codecs": {
+    "video": "avc1.64001F",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-open-gop/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.64001F,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-open-gop/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-fmp4-start",
+     "url": "media/h264-open-gop/hls/master-start.m3u8",
+     "mime": "application/vnd.apple.mpegurl",
+     "start": 6.5
+    }
+   ],
+   "seconds": 12
+  },
+  {
+   "id": "h264-closed-gop",
+   "group": "gop",
+   "title": "H.264 High, closed GOP, played from mid-clip",
+   "note": "The contrast to the open-GOP case.",
+   "codecs": {
+    "video": "avc1.64001F",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-closed-gop/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-fmp4-start",
+     "url": "media/h264-closed-gop/hls/master-start.m3u8",
+     "mime": "application/vnd.apple.mpegurl",
+     "start": 6.5
+    }
+   ],
+   "seconds": 12
+  },
+  {
+   "id": "hevc-open-gop-cra",
+   "group": "gop",
+   "title": "HEVC Main, open GOP (CRA keyframes), played from mid-clip",
+   "note": "",
+   "codecs": {
+    "video": "hvc1.1.6.L93.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-open-gop-cra/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.1.6.L93.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-open-gop-cra/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-fmp4-start",
+     "url": "media/hevc-open-gop-cra/hls/master-start.m3u8",
+     "mime": "application/vnd.apple.mpegurl",
+     "start": 6.5
+    }
+   ],
+   "seconds": 12
+  },
+  {
+   "id": "hevc-closed-gop",
+   "group": "gop",
+   "title": "HEVC Main, closed GOP (IDR keyframes), played from mid-clip",
+   "note": "The contrast to the CRA case.",
+   "codecs": {
+    "video": "hvc1.1.6.L93.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-closed-gop/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-fmp4-start",
+     "url": "media/hevc-closed-gop/hls/master-start.m3u8",
+     "mime": "application/vnd.apple.mpegurl",
+     "start": 6.5
+    }
+   ],
+   "seconds": 12
+  },
+  {
+   "id": "denremux-resume-h264",
+   "group": "delivery",
+   "title": "den-remux's HLS, resumed at 31.2 s: H.264 High with AAC 5.1, 1080p",
+   "note": "Segments of about 6 s cut on uneven keyframes and joined from per-GOP fragments; the resumed job keeps its timestamps and writes the init every segment plays with; seeking back uses a job from zero.",
+   "codecs": {
+    "video": "avc1.640028",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 6,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "hls-denremux",
+     "url": "media/denremux-resume-h264/denremux/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl",
+     "start": 31.2
+    }
+   ],
+   "seconds": 60
+  },
+  {
+   "id": "denremux-resume-hevc-pq",
+   "group": "delivery",
+   "title": "den-remux's HLS, resumed at 31.2 s: HEVC Main 10 HDR10, 1920\u00d7800",
+   "note": "The Hobbit's shape from #26: a cropped HDR10 copy, resumed mid-film.",
+   "codecs": {
+    "video": "hvc1.2.4.L123.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "PQ",
+   "width": 1920,
+   "height": 800,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "hls-denremux",
+     "url": "media/denremux-resume-hevc-pq/denremux/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl",
+     "start": 31.2
+    }
+   ],
+   "seconds": 60
+  },
+  {
+   "id": "slow-init",
+   "group": "delivery",
+   "title": "Slow responses: the same H.264 HLS with init.mp4 or a segment held back",
+   "note": "Where a browser's own player doesn't fetch through the service worker, the result says so rather than passing.",
+   "codecs": {
+    "video": "avc1.4D401F",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 0,
+   "audio_channels": 2,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "hls-slow-init-3",
+     "url": "slow/init-3/media/h264-main-31/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl",
+     "delay": 3
+    },
+    {
+     "format": "hls-slow-init-6",
+     "url": "slow/init-6/media/h264-main-31/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl",
+     "delay": 6
+    },
+    {
+     "format": "hls-slow-init-10",
+     "url": "slow/init-10/media/h264-main-31/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl",
+     "delay": 10
+    },
+    {
+     "format": "hls-slow-seg1-10",
+     "url": "slow/seg1-10/media/h264-main-31/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl",
+     "delay": 10
+    }
+   ],
+   "external": true,
+   "probe_only": false
+  },
+  {
+   "id": "external-eac3-joc",
+   "group": "external",
+   "title": "Dolby Atmos in E-AC-3 (JOC), 5.1 bed",
+   "note": "Dolby's Online Delivery Kit test signal, played from ott.dolby.com (\u00a9 Dolby, for reference).",
+   "codecs": {
+    "video": null,
+    "audio": "ec-3"
+   },
+   "video_range": "SDR",
+   "width": 0,
+   "height": 0,
+   "fps": 0,
+   "audio_channels": 16,
+   "spatial": true,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "https://ott.dolby.com/OnDelKits/DDP/Dolby_Digital_Plus_Online_Delivery_Kit_v1.4.1/Test_Signals/muxed_streams/HLS/Audio_fMP4/ChID_voices_Atmos_6ch_640kbps_ddp_joc_sub.mp4",
+     "mime": "audio/mp4; codecs=\"ec-3\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "https://ott.dolby.com/OnDelKits/DDP/Dolby_Digital_Plus_Online_Delivery_Kit_v1.4.1/Test_Signals/muxed_streams/HLS/Manifest_v7_fMP4/ChID_voices_1280x720p_25fps_h264_6ch_640kbps_ddp_joc.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "dash",
+     "url": "https://ott.dolby.com/OnDelKits/DDP/Dolby_Digital_Plus_Online_Delivery_Kit_v1.4.1/Test_Signals/muxed_streams/DASH/OnDemand_MPD/ChID_voices_1280x720p_25fps_h264_6ch_640kbps_ddp_joc.mpd",
+     "mime": "application/dash+xml"
+    }
+   ],
+   "external": true,
+   "probe_only": false
+  },
+  {
+   "id": "external-apple-dv-atmos",
+   "group": "external",
+   "title": "Apple's HLS example: SDR, HDR10, Dolby Vision and Atmos variants",
+   "note": "Played from Apple's developer examples; the player picks its own variant.",
+   "codecs": {
+    "video": "dvh1.05.06",
+    "audio": "ec-3"
+   },
+   "video_range": "SDR",
+   "width": 3840,
+   "height": 2160,
+   "fps": 0,
+   "audio_channels": 16,
+   "spatial": true,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "hls-fmp4",
+     "url": "https://devstreaming-cdn.apple.com/videos/streaming/examples/adv_dv_atmos/main.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ],
+   "external": true,
+   "probe_only": false
+  },
+  {
+   "id": "external-dtsx",
+   "group": "external",
+   "title": "DTS:X for streaming (DTS-UHD, dtsx), 5.1",
+   "note": "shaka-packager's bear-dtsx.mp4 test file (BSD-3-Clause; notice beside it).",
+   "codecs": {
+    "video": null,
+    "audio": "dtsx"
+   },
+   "video_range": "SDR",
+   "width": 0,
+   "height": 0,
+   "fps": 0,
+   "audio_channels": 6,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/external-dtsx/bear-dtsx.mp4",
+     "mime": "audio/mp4; codecs=\"dtsx\""
+    }
+   ],
+   "external": true,
+   "probe_only": false
+  },
+  {
+   "id": "external-dts-express",
+   "group": "external",
+   "title": "DTS Express 5.1 with H.264, DASH",
+   "note": "DASH-IF multichannel audio test vector, played from dash.akamaized.net.",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "dtse"
+   },
+   "video_range": "SDR",
+   "width": 854,
+   "height": 480,
+   "fps": 0,
+   "audio_channels": 6,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "dash",
+     "url": "https://dash.akamaized.net/dash264/TestCasesMCA/dts/1/Paint_dtse_testA.mpd",
+     "mime": "application/dash+xml"
+    }
+   ],
+   "external": true,
+   "probe_only": false
+  },
+  {
+   "id": "external-dts-hd-hra",
+   "group": "external",
+   "title": "DTS-HD High Resolution 5.1 with H.264, DASH",
+   "note": "DASH-IF multichannel audio test vector, played from dash.akamaized.net.",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "dtsh"
+   },
+   "video_range": "SDR",
+   "width": 854,
+   "height": 480,
+   "fps": 0,
+   "audio_channels": 6,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "dash",
+     "url": "https://dash.akamaized.net/dash264/TestCasesMCA/dts/1/Paint_dtsh_testA.mpd",
+     "mime": "application/dash+xml"
+    }
+   ],
+   "external": true,
+   "probe_only": false
+  },
+  {
    "id": "external-vc1-advanced",
    "group": "external",
-   "title": "VC-1 Advanced Profile, 720\u00d7480 interlaced (raw stream)",
-   "note": "FFmpeg FATE sample SA10143, linked from fate-suite.ffmpeg.org.",
+   "title": "VC-1 Advanced Profile (asked about only)",
+   "note": "Sample: https://fate-suite.ffmpeg.org/vc1/SA10143.vc1 (raw stream, no licence).",
    "codecs": {
     "video": "vc-1",
     "audio": null
@@ -2421,21 +2846,17 @@
    "height": 480,
    "fps": 0,
    "audio_channels": 0,
+   "spatial": false,
    "subtitles": null,
-   "formats": [
-    {
-     "format": "raw",
-     "url": "https://fate-suite.ffmpeg.org/vc1/SA10143.vc1",
-     "mime": "video/mp4; codecs=\"vc-1\""
-    }
-   ],
-   "external": true
+   "formats": [],
+   "external": true,
+   "probe_only": true
   },
   {
    "id": "external-truehd-atmos",
    "group": "external",
-   "title": "Dolby TrueHD with Atmos, 7.1 (raw stream, under a second)",
-   "note": "FFmpeg FATE sample truehd/atmos.thd, linked from fate-suite.ffmpeg.org.",
+   "title": "Dolby TrueHD with Atmos (asked about only)",
+   "note": "Sample: https://fate-suite.ffmpeg.org/truehd/atmos.thd (raw stream, no licence).",
    "codecs": {
     "video": null,
     "audio": "mlpa"
@@ -2445,21 +2866,17 @@
    "height": 0,
    "fps": 0,
    "audio_channels": 8,
+   "spatial": true,
    "subtitles": null,
-   "formats": [
-    {
-     "format": "raw",
-     "url": "https://fate-suite.ffmpeg.org/truehd/atmos.thd",
-     "mime": "audio/mp4; codecs=\"mlpa\""
-    }
-   ],
-   "external": true
+   "formats": [],
+   "external": true,
+   "probe_only": true
   },
   {
    "id": "external-dts-hd-ma",
    "group": "external",
-   "title": "DTS-HD Master Audio 7.1, 24-bit (raw stream)",
-   "note": "FFmpeg FATE sample dts/master_audio_7.1_24bit.dts (6.3 MB), linked from fate-suite.ffmpeg.org.",
+   "title": "DTS-HD Master Audio (asked about only)",
+   "note": "Sample: https://fate-suite.ffmpeg.org/dts/master_audio_7.1_24bit.dts (raw stream, no licence).",
    "codecs": {
     "video": null,
     "audio": "dtsl"
@@ -2469,15 +2886,11 @@
    "height": 0,
    "fps": 0,
    "audio_channels": 8,
+   "spatial": false,
    "subtitles": null,
-   "formats": [
-    {
-     "format": "raw",
-     "url": "https://fate-suite.ffmpeg.org/dts/master_audio_7.1_24bit.dts",
-     "mime": "audio/mp4; codecs=\"dtsl\""
-    }
-   ],
-   "external": true
+   "formats": [],
+   "external": true,
+   "probe_only": true
   }
  ]
 }

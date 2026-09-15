@@ -14,11 +14,19 @@ Every clip is a four-second synthetic test pattern (ffmpeg's `testsrc2` with the
 - **hls.js** — the same HLS through [hls.js](https://github.com/video-dev/hls.js) and Media Source Extensions
   (or ManagedMediaSource on iOS).
 
+Three modes: **Codecs** plays each codec once, the plainest way the browser can (a file, else HLS, else DASH);
+**Delivery** plays the cases about how media arrives — containers, den-remux-shaped HLS, slow responses, starts on
+open-GOP keyframes — every way; **Everything** plays every clip every way. Results are a matrix of case against
+delivery: file, HLS in the browser's own player, HLS through hls.js (with Den Web's settings), DASH through dash.js.
+
 A test passes when the picture has a size, at least 15 frames are presented (`requestVideoFrameCallback`, else
-`getVideoPlaybackQuality`) and playback passes two seconds; audio counts when bytes were decoded
-(`webkitAudioDecodedByteCount`) or an analyser hears it; subtitles count when cues load. It fails on a `MediaError`
-or a fatal hls.js error, and stalls when none of that happens in 15 seconds. It does not judge how the picture looks
-— whether HDR is shown as HDR still takes eyes.
+`getVideoPlaybackQuality`) and playback reaches the end of the clip, or six seconds past its first frame for a long
+stream. Audio counts when bytes were decoded (`webkitAudioDecodedByteCount`) or an analyser hears it; playback is
+unmuted at volume 0 where the browser allows it (iOS ignores volume, so it stays muted there). A pass is only partly
+one (~) when audio or cues are missing, the first cue isn't at 0.5 s, a seek to 80 % and back doesn't recover, playback
+didn't start at `EXT-X-START`, more than 5 % of frames dropped, or it played only muted. Each result records time to
+first frame. It fails on a `MediaError` or a fatal hls.js/dash.js error, and stalls when it doesn't get there in 20
+seconds. It does not judge how the picture looks — whether HDR is shown as HDR still takes eyes.
 
 The capability probe asks, for every clip's real codec string, `canPlayType`, `MediaSource.isTypeSupported` and
 `MediaCapabilities.decodingInfo` (with the HDR transfer, gamut and metadata type), plus a list of codec strings
@@ -40,17 +48,31 @@ nothing here can encode yet (AC-4, MPEG-H, xHE-AAC, VVC, IAMF…).
 - **Subtitles**: WebVTT as an HLS rendition (fMP4 and TS) and as a `<track>`; SRT as a `<track>`; SRT and ASS
   inside Matroska; 3GPP timed text inside MP4; VobSub (rendered by `spumux`) and PGS (rendered by tsMuxeR) inside
   Matroska.
-- **Linked, not copied**: VC-1 Advanced Profile, TrueHD with Atmos and DTS-HD Master Audio, as raw streams from
-  FFmpeg's FATE suite (fate-suite.ffmpeg.org). Those samples state no licence, so the page plays them from there.
+- **Starting mid-stream**: open-GOP H.264 and CRA-keyframe HEVC played from `EXT-X-START`, beside closed-GOP
+  contrasts.
+- **Delivered like den-remux**: a 60-second clip resumed at 31.2 s, in segments of about 6 s cut on uneven keyframes and
+  joined from per-GOP fragments, with the resumed job's init and a job from zero behind it (H.264 with AAC 5.1, and a
+  1920×800 HDR10 HEVC).
+- **HDR signalling faults one at a time**: masters with no `VIDEO-RANGE`, no `FRAME-RATE`, or neither, and an HDR10
+  file whose container names no colours (only the SPS does).
+- **Slow responses**: `docs/sw.js`, a service worker, holds back `init.mp4` for 3, 6 or 10 seconds, or segment 1 for
+  10; where a player doesn't fetch through it, the result is marked unmeasured.
+- **From elsewhere**: Atmos in E-AC-3 (Dolby's delivery-kit test signal as a file, HLS and DASH, and Apple's
+  Dolby Vision + Atmos HLS example), DTS Express and DTS-HD High Resolution (DASH-IF test vectors), all played from
+  where they are hosted; DTS:X for streaming (`dtsx`), committed from shaka-packager's BSD-licensed test data.
+- **Asked about only**: VC-1, TrueHD with Atmos, DTS-HD Master Audio — FFmpeg's FATE samples are raw streams with no
+  licence, which no browser plays bare.
 - **Containers**: MP4 (progressive), HLS with fMP4 and MPEG-TS segments, DASH (through
   [dash.js](https://github.com/Dash-Industry-Forum/dash.js)), WebM, Matroska, Ogg, QuickTime, AVI, MPEG-TS and M2TS
   files, FLV.
 
-Not covered, because no free encoder or freely usable sample exists: Atmos in E-AC-3 (JOC) and DTS:X. The capability
-probe still asks about both.
+Not covered: DTS:X inside DTS-HD MA (the Blu-ray kind), which has no stable source — browsers don't decode DTS-HD MA
+at all, so it would read like the MA row — and segments too large for GitHub Pages (a 4K remux's 100–250 MB GOPs,
+which can exceed a SourceBuffer's quota); that one needs hosting elsewhere.
 
 ## Page options
 
+- `?mode=codecs|delivery|everything` — which tests Run plays (codecs by default).
 - `?groups=hdr,dolby-vision` — only those groups ticked.
 - `?only=hevc-main10` — only cases whose id starts with it.
 - `?autorun=1` — start playback without a tap (for a driven browser: Safari's `safaridriver`, Playwright).

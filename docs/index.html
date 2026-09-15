@@ -9,21 +9,27 @@
 <body>
 <header>
   <h1>Codec Lab</h1>
-  <p class="lede">What this browser says it plays, and what it actually plays: every clip is a short synthetic test
-  pattern, tried as a file, as HLS in the browser's own player, and as HLS through hls.js.</p>
+  <p class="lede">What this browser says it plays, and what it actually plays. Every clip is a short synthetic test
+  pattern, played as a file, as HLS in the browser's own player and through hls.js, and as DASH through dash.js.</p>
   <dl id="env" class="env"></dl>
 </header>
 
 <section class="controls">
+  <fieldset class="modes">
+    <legend>What to test</legend>
+    <label><input type="radio" name="mode" value="codecs" checked> Codecs: one plain test per codec</label>
+    <label><input type="radio" name="mode" value="delivery"> Delivery: containers, HLS shapes, slow starts, GOPs</label>
+    <label><input type="radio" name="mode" value="everything"> Everything: every clip, every way</label>
+  </fieldset>
   <fieldset id="groups"><legend>Groups</legend></fieldset>
   <div class="buttons">
-    <button id="run" type="button">Run playback tests</button>
+    <button id="run" type="button">Run tests</button>
     <button id="stop" type="button" hidden>Stop</button>
     <button id="copy" type="button" disabled>Copy report</button>
     <button id="download" type="button" disabled>Download report</button>
     <button id="share" type="button" hidden disabled>Share report</button>
   </div>
-  <p id="status" role="status">Capability probe runs on load. Playback needs a tap, so the browser lets it play.</p>
+  <p id="status" role="status">The capability probe runs on load. Playback needs a tap, so the browser lets it play.</p>
   <progress id="progress" value="0" max="1" hidden></progress>
 </section>
 
@@ -32,19 +38,19 @@
   <p id="now" class="now"></p>
 </section>
 
-<section>
+<section class="matrix">
   <table id="results">
-    <thead>
-      <tr><th scope="col">Case</th><th scope="col">Codecs</th><th scope="col">Says</th><th scope="col">Plays</th></tr>
-    </thead>
+    <thead><tr></tr></thead>
     <tbody></tbody>
   </table>
 </section>
 
 <footer>
-  <p>Legend: <span class="chip ok">✓</span> works · <span class="chip bad">✗</span> fails ·
-  <span class="chip part">~</span> partly (video without audio, no cues) · <span class="chip na">–</span> not available here.
-  hls.js <span id="hlsver"></span> (Apache-2.0) and dash.js 5.2.1 (BSD-3-Clause), vendored.</p>
+  <p>Legend: <span class="chip ok">✓</span> played · <span class="chip part">~</span> played, short of something
+  (audio, cues, a seek, the start point, dropped frames, sound) · <span class="chip bad">✗</span> failed or stalled ·
+  <span class="chip na">–</span> not available here · <span class="chip na">?</span> not measured. Hover a result for
+  its details.</p>
+  <p>hls.js 1.7.2 (Apache-2.0) and dash.js 5.2.1 (BSD-3-Clause), vendored.</p>
 </footer>
 
 <script src="vendor/hls-1.7.2.min.js"></script>

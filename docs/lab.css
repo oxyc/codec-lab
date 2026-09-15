@@ -65,11 +65,16 @@ progress { width: 100%; }
 .stage { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 16px; }
 video { max-width: 100%; background: #000; border-radius: 6px; }
 .now { color: var(--muted); font-family: ui-monospace, Menlo, monospace; font-size: 12px; overflow-wrap: anywhere; }
-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 8px; overflow: hidden; }
-section:has(> table) { overflow-x: auto; }
+.modes { flex-direction: column; }
+.matrix { overflow-x: auto; }
+table { width: 100%; min-width: 900px; border-collapse: collapse; background: var(--card); border-radius: 8px; }
 th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-th { font-weight: 600; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
-tr.group td { background: var(--bg); font-weight: 600; padding-top: 14px; }
+thead th { font-weight: 600; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em;
+  position: sticky; top: 0; background: var(--card); z-index: 1; }
+tbody th { font-weight: 500; width: 22ch; }
+td[data-col] { min-width: 12ch; }
+td[data-col]:not([data-col="says"]) { border-left: 1px solid var(--line); }
+tr.group td { background: var(--bg); font-weight: 600; padding-top: 14px; text-transform: capitalize; }
 td.codecs { font-family: ui-monospace, Menlo, monospace; font-size: 12px; overflow-wrap: anywhere; min-width: 14ch; }
 td .note { color: var(--muted); font-size: 12px; display: block; }
 .chips { display: flex; flex-wrap: wrap; gap: 4px; }

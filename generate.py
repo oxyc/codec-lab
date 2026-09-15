@@ -33,6 +33,13 @@ FONT = "/System/Library/Fonts/Supplemental/Arial.ttf"
 # One frame of a real profile 7 MEL RPU, from dovi_tool's test assets (MIT).
 DOVI_P7_RPU = "https://raw.githubusercontent.com/quietvoid/dovi_tool/main/assets/tests/mel_orig.bin"
 FATE = "https://fate-suite.ffmpeg.org"
+DOLBY_KIT = "https://ott.dolby.com/OnDelKits/DDP/Dolby_Digital_Plus_Online_Delivery_Kit_v1.4.1/Test_Signals/muxed_streams"
+APPLE_EXAMPLES = "https://devstreaming-cdn.apple.com/videos/streaming/examples"
+DASH_IF_DTS = "https://dash.akamaized.net/dash264/TestCasesMCA/dts/1"
+# Keyframes as a release has them — unevenly spaced — for the cases shaped like den-remux's output.
+RELEASE_KEYFRAMES = [0, 2.5, 7, 9.5, 13, 21, 23.5, 28, 30, 34.5, 37, 45, 47.5, 52, 54.5, 58]
+# den-remux's segment target (playlist.rs): a cut at the first keyframe at or after each multiple of it.
+DENREMUX_TARGET = 6.0
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -82,6 +89,14 @@ class Case:
     codecs: dict = None
     dims: tuple = (0, 0)
     channels: int = 0
+    # Object audio (Atmos): the capability probe asks with `spatialRendering`.
+    spatial: bool = False
+    # A longer clip, uneven keyframe times, and where playback is told to start (EXT-X-START).
+    seconds: int = SECONDS
+    keyframes: list = None
+    start: float = None
+    # False: the container names no colours, and only the stream's SPS says what they are.
+    container_colour: bool = True
 
 
 AAC = Audio("aac", args=["-b:a", "128k"])
@@ -168,8 +183,12 @@ CASES = [
     # --- HDR -----------------------------------------------------------------------------------------------------
     Case("hevc-main10-pq", "hdr", "HEVC Main 10 HDR10 (PQ), 1080p",
          x265("profile=main10:level-idc=41:" + HDR10_PARAMS, "yuv420p10le", (1920, 1080), **PQ), AAC,
-         MP4_FAMILY + ["hls-fmp4-bare", "dash", "mkv"],
-         note="hls-fmp4-bare is the same stream with no VIDEO-RANGE or FRAME-RATE in its master playlist."),
+         MP4_FAMILY + ["hls-fmp4-bare", "hls-fmp4-no-range", "hls-fmp4-no-fps", "dash", "mkv"],
+         note="The -bare, -no-range and -no-fps masters drop VIDEO-RANGE and FRAME-RATE together, then one at a time."),
+    Case("hevc-main10-pq-silent-container", "hdr", "HEVC Main 10 HDR10 (PQ) whose container names no colours, 1080p",
+         x265("profile=main10:level-idc=41:" + HDR10_PARAMS, "yuv420p10le", (1920, 1080), **PQ), AAC,
+         ["mp4", "mkv", "hls-fmp4", "hls-fmp4-no-range"], container_colour=False,
+         note="Like a UHD remux with no Matroska Colour element: only the SPS says PQ."),
     Case("hevc-main10-hdr10plus", "hdr", "HEVC Main 10 HDR10+ (PQ with dynamic metadata), 1080p",
          Video("libx265", (1920, 1080), "30", "yuv420p10le",
                ["-preset", "fast", "-crf", "30", "-x265-params",
@@ -301,21 +320,85 @@ CASES = [
          AAC, ["mkv"], subtitles="vobsub", note="Rendered from the same cues by spumux (dvdauthor)."),
     Case("subs-pgs", "subtitles", "PGS (Blu-ray bitmap subtitles) inside Matroska", x264("main", "3.0", size=(640, 360)),
          AAC, ["mkv"], subtitles="pgs", note="Rendered from the same cues by tsMuxeR."),
-    # --- Linked from FFmpeg's FATE suite ---------------------------------------------------------------------------
-    # Nothing free encodes these, and FATE's samples carry no licence, so they are played from fate-suite.ffmpeg.org
-    # rather than copied here. They are raw elementary streams: a browser has to take them without a container.
-    Case("external-vc1-advanced", "external", "VC-1 Advanced Profile, 720×480 interlaced (raw stream)",
-         external=[{"format": "raw", "url": f"{FATE}/vc1/SA10143.vc1", "mime": 'video/mp4; codecs="vc-1"'}],
+    # --- Starting mid-stream: open and closed GOPs -----------------------------------------------------------------
+    # A resume or seek lands on a keyframe that may be an open-GOP I-frame (H.264) or a CRA (HEVC), whose leading
+    # frames reference pictures before it. -start plays from EXT-X-START half-way in.
+    Case("h264-open-gop", "gop", "H.264 High, open GOP, played from mid-clip",
+         Video("libx264", (1280, 720), "30", "yuv420p",
+               ["-profile:v", "high", "-level:v", "3.1", "-preset", "veryfast", "-crf", "28",
+                "-x264-params", "open-gop=1:bframes=3"]),
+         AAC, ["mp4", "hls-fmp4", "hls-fmp4-start"], seconds=12, start=6.5),
+    Case("h264-closed-gop", "gop", "H.264 High, closed GOP, played from mid-clip", x264("high", "3.1"), AAC,
+         ["hls-fmp4", "hls-fmp4-start"], seconds=12, start=6.5, note="The contrast to the open-GOP case."),
+    Case("hevc-open-gop-cra", "gop", "HEVC Main, open GOP (CRA keyframes), played from mid-clip",
+         x265("level-idc=31:open-gop=1:bframes=4"), AAC, ["mp4", "hls-fmp4", "hls-fmp4-start"], seconds=12, start=6.5),
+    Case("hevc-closed-gop", "gop", "HEVC Main, closed GOP (IDR keyframes), played from mid-clip",
+         x265("level-idc=31:open-gop=0"), AAC, ["hls-fmp4", "hls-fmp4-start"], seconds=12, start=6.5,
+         note="The contrast to the CRA case."),
+    # --- Delivered the way den-remux delivers it ------------------------------------------------------------------
+    Case("denremux-resume-h264", "delivery", "den-remux's HLS, resumed at 31.2 s: H.264 High with AAC 5.1, 1080p",
+         x264("high", "4.0", size=(1920, 1080)), Audio("aac", 6, args=["-b:a", "384k"]), ["hls-denremux"],
+         seconds=60, keyframes=RELEASE_KEYFRAMES, start=31.2,
+         note="Segments of about 6 s cut on uneven keyframes and joined from per-GOP fragments; the resumed job "
+              "keeps its timestamps and writes the init every segment plays with; seeking back uses a job from zero."),
+    Case("denremux-resume-hevc-pq", "delivery", "den-remux's HLS, resumed at 31.2 s: HEVC Main 10 HDR10, 1920×800",
+         x265("profile=main10:level-idc=41:" + HDR10_PARAMS, "yuv420p10le", (1920, 800), **PQ), AAC,
+         ["hls-denremux"], seconds=60, keyframes=RELEASE_KEYFRAMES, start=31.2,
+         note="The Hobbit's shape from #26: a cropped HDR10 copy, resumed mid-film."),
+    # A service worker (docs/sw.js) holds a response back: Apple's player gives up on an init.mp4 after about five
+    # seconds and reports a decode error.
+    Case("slow-init", "delivery", "Slow responses: the same H.264 HLS with init.mp4 or a segment held back",
+         external=[
+             *[{"format": f"hls-slow-init-{s}", "url": f"slow/init-{s}/media/h264-main-31/hls/master.m3u8",
+                "mime": "application/vnd.apple.mpegurl", "delay": s} for s in (3, 6, 10)],
+             {"format": "hls-slow-seg1-10", "url": "slow/seg1-10/media/h264-main-31/hls/master.m3u8",
+              "mime": "application/vnd.apple.mpegurl", "delay": 10},
+         ],
+         codecs={"video": "avc1.4D401F", "audio": "mp4a.40.2"}, dims=(1280, 720), channels=2,
+         note="Where a browser's own player doesn't fetch through the service worker, the result says so rather "
+              "than passing."),
+    # --- From elsewhere ---------------------------------------------------------------------------------------------
+    # Nothing free encodes these. Where the source allows copying they are here; otherwise the page plays them from
+    # where they are hosted.
+    Case("external-eac3-joc", "external", "Dolby Atmos in E-AC-3 (JOC), 5.1 bed",
+         external=[
+             {"format": "mp4", "url": f"{DOLBY_KIT}/HLS/Audio_fMP4/ChID_voices_Atmos_6ch_640kbps_ddp_joc_sub.mp4",
+              "mime": 'audio/mp4; codecs="ec-3"'},
+             {"format": "hls-fmp4", "url": f"{DOLBY_KIT}/HLS/Manifest_v7_fMP4/ChID_voices_1280x720p_25fps_h264_6ch_640kbps_ddp_joc.m3u8",
+              "mime": "application/vnd.apple.mpegurl"},
+             {"format": "dash", "url": f"{DOLBY_KIT}/DASH/OnDemand_MPD/ChID_voices_1280x720p_25fps_h264_6ch_640kbps_ddp_joc.mpd",
+              "mime": "application/dash+xml"},
+         ],
+         codecs={"video": None, "audio": "ec-3"}, channels=16, spatial=True,
+         note="Dolby's Online Delivery Kit test signal, played from ott.dolby.com (© Dolby, for reference)."),
+    Case("external-apple-dv-atmos", "external", "Apple's HLS example: SDR, HDR10, Dolby Vision and Atmos variants",
+         external=[{"format": "hls-fmp4", "url": f"{APPLE_EXAMPLES}/adv_dv_atmos/main.m3u8",
+                    "mime": "application/vnd.apple.mpegurl"}],
+         codecs={"video": "dvh1.05.06", "audio": "ec-3"}, dims=(3840, 2160), channels=16, spatial=True,
+         note="Played from Apple's developer examples; the player picks its own variant."),
+    Case("external-dtsx", "external", "DTS:X for streaming (DTS-UHD, dtsx), 5.1",
+         external=[{"format": "mp4", "url": "media/external-dtsx/bear-dtsx.mp4", "mime": 'audio/mp4; codecs="dtsx"'}],
+         codecs={"video": None, "audio": "dtsx"}, channels=6,
+         note="shaka-packager's bear-dtsx.mp4 test file (BSD-3-Clause; notice beside it)."),
+    Case("external-dts-express", "external", "DTS Express 5.1 with H.264, DASH",
+         external=[{"format": "dash", "url": f"{DASH_IF_DTS}/Paint_dtse_testA.mpd", "mime": "application/dash+xml"}],
+         codecs={"video": "avc1.4D401E", "audio": "dtse"}, dims=(854, 480), channels=6,
+         note="DASH-IF multichannel audio test vector, played from dash.akamaized.net."),
+    Case("external-dts-hd-hra", "external", "DTS-HD High Resolution 5.1 with H.264, DASH",
+         external=[{"format": "dash", "url": f"{DASH_IF_DTS}/Paint_dtsh_testA.mpd", "mime": "application/dash+xml"}],
+         codecs={"video": "avc1.4D401E", "audio": "dtsh"}, dims=(854, 480), channels=6,
+         note="DASH-IF multichannel audio test vector, played from dash.akamaized.net."),
+    # FFmpeg's FATE samples carry no licence and are raw elementary streams, which no browser plays bare: asked about
+    # only.
+    Case("external-vc1-advanced", "external", "VC-1 Advanced Profile (asked about only)", external=[],
          codecs={"video": "vc-1", "audio": None}, dims=(720, 480),
-         note="FFmpeg FATE sample SA10143, linked from fate-suite.ffmpeg.org."),
-    Case("external-truehd-atmos", "external", "Dolby TrueHD with Atmos, 7.1 (raw stream, under a second)",
-         external=[{"format": "raw", "url": f"{FATE}/truehd/atmos.thd", "mime": 'audio/mp4; codecs="mlpa"'}],
-         codecs={"video": None, "audio": "mlpa"}, channels=8,
-         note="FFmpeg FATE sample truehd/atmos.thd, linked from fate-suite.ffmpeg.org."),
-    Case("external-dts-hd-ma", "external", "DTS-HD Master Audio 7.1, 24-bit (raw stream)",
-         external=[{"format": "raw", "url": f"{FATE}/dts/master_audio_7.1_24bit.dts", "mime": 'audio/mp4; codecs="dtsl"'}],
+         note=f"Sample: {FATE}/vc1/SA10143.vc1 (raw stream, no licence)."),
+    Case("external-truehd-atmos", "external", "Dolby TrueHD with Atmos (asked about only)", external=[],
+         codecs={"video": None, "audio": "mlpa"}, channels=8, spatial=True,
+         note=f"Sample: {FATE}/truehd/atmos.thd (raw stream, no licence)."),
+    Case("external-dts-hd-ma", "external", "DTS-HD Master Audio (asked about only)", external=[],
          codecs={"video": None, "audio": "dtsl"}, channels=8,
-         note="FFmpeg FATE sample dts/master_audio_7.1_24bit.dts (6.3 MB), linked from fate-suite.ffmpeg.org."),
+         note=f"Sample: {FATE}/dts/master_audio_7.1_24bit.dts (raw stream, no licence)."),
 ]
 
 
@@ -366,12 +449,16 @@ def encode(case, out):
     v, a = case.video, case.audio
     inputs, vf = source_args(case)
     gop = max(round(fps_value(v.fps)), 1)
-    video = ["-map", "0:v", "-vf", vf, "-c:v", v.encoder, "-pix_fmt", v.pix_fmt, *v.args, "-g", str(gop),
-             *colour_args(v)]
+    keyframes = ["-g", str(gop)]
+    if case.keyframes:
+        # Keyframes where the case puts them, unevenly, and nowhere else: den-remux cuts its segments on a release's own.
+        keyframes = ["-g", "1000", "-sc_threshold", "0",
+                     "-force_key_frames", ",".join(f"{t:g}" for t in case.keyframes)]
+    video = ["-map", "0:v", "-vf", vf, "-c:v", v.encoder, "-pix_fmt", v.pix_fmt, *v.args, *keyframes, *colour_args(v)]
     if v.encoder == "libx265":
-        # A keyframe every second, and no scene cuts: segments cut on them.
+        # A keyframe every second (or only where forced), and no scene cuts: segments cut on them.
         i = video.index("-x265-params") + 1
-        video[i] += f":keyint={gop}:min-keyint={gop}:scenecut=0"
+        video[i] += ":keyint=1000:min-keyint=1:scenecut=0" if case.keyframes else f":keyint={gop}:min-keyint={gop}:scenecut=0"
         if case.id.endswith("hev1"):
             video[i] += ":repeat-headers=1"
     audio = []
@@ -706,7 +793,8 @@ def video_range(v):
     return {16: "PQ", 18: "HLG"}.get(v.transfer, "SDR")
 
 
-def master_playlist(case, codecs, bandwidth, media, *, bare=False, audio_group=True):
+def master_playlist(case, codecs, bandwidth, media, *, omit=(), audio_group=True):
+    """The one-variant master. `omit` leaves out "range" (VIDEO-RANGE) and/or "fps" (FRAME-RATE)."""
     v, a = case.video, case.audio
     video_codec = codecs["video"]
     supplemental = ""
@@ -727,10 +815,10 @@ def master_playlist(case, codecs, bandwidth, media, *, bare=False, audio_group=T
                      'AUTOSELECT=YES,FORCED=NO,URI="subs.m3u8"')
         subs = ',SUBTITLES="subs"'
     attrs = f'BANDWIDTH={bandwidth},CODECS="{",".join(names)}"{supplemental}'
-    if not bare:
+    if "range" not in omit:
         attrs += f",VIDEO-RANGE={video_range(v)}"
     attrs += f",RESOLUTION={v.size[0]}x{v.size[1]}"
-    if not bare:
+    if "fps" not in omit:
         attrs += f",FRAME-RATE={fps_value(v.fps):.3f}"
     lines += [f"#EXT-X-STREAM-INF:{attrs}{group}{subs}", media, ""]
     return "\n".join(lines)
@@ -782,11 +870,15 @@ Dialogue: 0,0:00:02.00,0:00:03.80,Default,,0,0,0,,The second cue, in yellow.
 
 
 def package(case):
-    if case.external:
+    # Every clip-length reference reads SECONDS; a case may ask for a longer clip.
+    global SECONDS
+    SECONDS = case.seconds
+    if case.external is not None:
         return {
             "id": case.id, "group": case.group, "title": case.title, "note": case.note, "codecs": case.codecs,
             "video_range": "SDR", "width": case.dims[0], "height": case.dims[1], "fps": 0,
-            "audio_channels": case.channels, "subtitles": None, "formats": case.external, "external": True,
+            "audio_channels": case.channels, "spatial": case.spatial, "subtitles": None, "formats": case.external,
+            "external": True, "probe_only": not case.external,
         }
     work = WORK / case.id
     out = MEDIA / case.id
@@ -843,13 +935,39 @@ def package(case):
             print(f"  ! {case.id} {fmt}: {e}", flush=True)
             entry = {"format": fmt, "unavailable": "the muxer refused this combination"}
         formats.append(entry)
+    if not case.container_colour:
+        for path in (out / "clip.mp4", out / "clip.mkv", out / "hls" / "init.mp4"):
+            if path.exists():
+                silence_container_colour(path)
     return {
         "id": case.id, "group": case.group, "title": case.title, "note": case.note,
         "codecs": codecs, "video_range": video_range(case.video),
         "width": case.video.size[0], "height": case.video.size[1], "fps": round(fps_value(case.video.fps), 3),
-        "audio_channels": case.audio.channels if case.audio else 0,
-        "subtitles": case.subtitles, "formats": formats,
+        "audio_channels": case.audio.channels if case.audio else 0, "spatial": False,
+        "subtitles": case.subtitles, "formats": formats, "seconds": SECONDS,
     }
+
+
+def silence_container_colour(path):
+    """Take the colour description off a finished file, leaving the stream's SPS the only thing that says what the
+    colours are: an MP4's `colr` box becomes `free`, and a Matroska Colour element an ID no demuxer knows, so it is
+    skipped. Done in place, keeping every size and offset — a remux with `-color_*` unspecified gets the tags back,
+    because ffmpeg reads them out of the SPS again."""
+    data = bytearray(path.read_bytes())
+    if path.suffix == ".mkv":
+        # Only the header, before the first Cluster, so no coded picture is touched.
+        end = data.find(b"\x1f\x43\xb6\x75")
+        i = data.find(b"\x55\xb0", 0, end)
+        if i != -1:
+            data[i:i + 2] = b"\x5f\x5f"
+    else:
+        moov = data.find(b"moov")
+        end = moov + struct.unpack(">I", data[moov - 4:moov])[0] if moov != -1 else len(data)
+        i = data.find(b"colr", 0, end)
+        while i != -1:
+            data[i:i + 4] = b"free"
+            i = data.find(b"colr", i + 4, end)
+    path.write_bytes(data)
 
 
 def mime_codecs(codecs):
@@ -893,26 +1011,44 @@ def package_format(case, fmt, encoded, probe, out, tag, codecs, bandwidth):
             text = re.sub(r'(mimeType="audio/mp4" codecs=")[^"]*"', lambda m: f'{m.group(1)}{codecs["audio"]}"', text)
         manifest.write_text(text)
         return {"format": fmt, "url": f"media/{case.id}/dash/manifest.mpd", "mime": "application/dash+xml"}
-    if fmt in ("hls-fmp4", "hls-ts", "hls-fmp4-bare"):
-        sub = {"hls-fmp4": "hls", "hls-ts": "ts", "hls-fmp4-bare": "hls"}[fmt]
+    if fmt == "hls-denremux":
+        return denremux_hls(case, encoded, out, tag, codecs, bandwidth)
+    # Each HLS format: the folder its segments are in, its master's name, and what that master leaves out.
+    variants = {
+        "hls-fmp4": ("hls", "master.m3u8", ()), "hls-ts": ("ts", "master.m3u8", ()),
+        "hls-fmp4-bare": ("hls", "master-bare.m3u8", ("range", "fps")),
+        "hls-fmp4-no-range": ("hls", "master-no-range.m3u8", ("range",)),
+        "hls-fmp4-no-fps": ("hls", "master-no-fps.m3u8", ("fps",)),
+        "hls-fmp4-start": ("hls", "master-start.m3u8", ()),
+    }
+    if fmt in variants:
+        sub, name, omit = variants[fmt]
         folder = out / sub
         folder.mkdir(exist_ok=True)
-        if fmt != "hls-fmp4-bare":
-            seg = ["-hls_segment_type", "fmp4", "-hls_fmp4_init_filename", "init.mp4"] if fmt != "hls-ts" else []
-            source = probe if (fmt != "hls-ts" and probe.exists()) else encoded
-            ts_tag = [] if fmt == "hls-ts" else tag
-            run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", source, "-map", "0", "-c", "copy", *ts_tag,
-                 "-strict", "unofficial", "-f", "hls", "-hls_time", "2", "-hls_playlist_type", "vod", *seg,
-                 "-hls_segment_filename", str(folder / ("seg%d.m4s" if fmt != "hls-ts" else "seg%d.ts")),
-                 folder / "media.m3u8"])
+        if not (folder / "media.m3u8").exists():
+            ts = sub == "ts"
+            seg = [] if ts else ["-hls_segment_type", "fmp4", "-hls_fmp4_init_filename", "init.mp4"]
+            source = encoded if ts or not probe.exists() else probe
+            run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", source, "-map", "0:v", "-map", "0:a?",
+                 "-c", "copy", *([] if ts else tag), "-strict", "unofficial", "-f", "hls", "-hls_time", "2",
+                 "-hls_playlist_type", "vod", *seg,
+                 "-hls_segment_filename", str(folder / ("seg%d.ts" if ts else "seg%d.m4s")), folder / "media.m3u8"])
             if case.subtitles == "webvtt":
                 (folder / "subs.vtt").write_text(WEBVTT)
                 (folder / "subs.m3u8").write_text(
                     f"#EXTM3U\n#EXT-X-TARGETDURATION:{SECONDS}\n#EXT-X-VERSION:3\n#EXT-X-MEDIA-SEQUENCE:0\n"
                     f"#EXT-X-PLAYLIST-TYPE:VOD\n#EXTINF:{SECONDS}.0,\nsubs.vtt\n#EXT-X-ENDLIST\n")
-        name = "master-bare.m3u8" if fmt == "hls-fmp4-bare" else "master.m3u8"
-        (folder / name).write_text(master_playlist(case, codecs, bandwidth, "media.m3u8", bare=fmt == "hls-fmp4-bare"))
-        return {"format": fmt, "url": f"media/{case.id}/{sub}/{name}", "mime": "application/vnd.apple.mpegurl"}
+        media = "media.m3u8"
+        entry = {"format": fmt, "url": f"media/{case.id}/{sub}/{name}", "mime": "application/vnd.apple.mpegurl"}
+        if fmt == "hls-fmp4-start":
+            start = case.start if case.start is not None else SECONDS / 2
+            text = (folder / "media.m3u8").read_text()
+            media = "media-start.m3u8"
+            (folder / media).write_text(
+                text.replace("#EXT-X-MAP", f"#EXT-X-START:TIME-OFFSET={start:.3f},PRECISE=YES\n#EXT-X-MAP", 1))
+            entry["start"] = start
+        (folder / name).write_text(master_playlist(case, codecs, bandwidth, media, omit=omit))
+        return entry
     extension, mime = {"webm": ("webm", "video/webm"), "mkv": ("mkv", "video/x-matroska"), "ogg": ("ogv", "video/ogg"),
                        "mov": ("mov", "video/quicktime"), "avi": ("avi", "video/x-msvideo"), "ts": ("ts", "video/mp2t"),
                        "m2ts": ("m2ts", "video/mp2t"), "flv": ("flv", "video/x-flv")}[fmt]
@@ -931,6 +1067,76 @@ def package_format(case, fmt, encoded, probe, out, tag, codecs, bandwidth):
         parts.append(audio_short.get(case.audio.encoder, codecs.get("audio")))
     return {"format": fmt, "url": f"media/{case.id}/clip.{extension}",
             "mime": f'{mime}; codecs="{",".join(p for p in parts if p)}"'}
+
+
+def denremux_hls(case, encoded, out, tag, codecs, bandwidth):
+    """HLS shaped like den-remux's (`playlist.rs`, `job.rs`, `session.rs`): segments cut at the first keyframe at or after
+    each 6 s and joined from ffmpeg's per-GOP fMP4 fragments, dropping every fragment's `styp` but the first. The
+    session is resumed part-way, so its first ffmpeg job starts at the resume segment with the source's timestamps
+    kept, and that job's init.mp4 is the one every segment plays with; the segments before it come from a second job
+    from zero, which is what a player seeking back gets."""
+    folder = out / "denremux"
+    folder.mkdir()
+    cuts, target = [0.0], DENREMUX_TARGET
+    for k in case.keyframes:
+        if 0 < k < SECONDS and k + 1e-9 >= target:
+            cuts.append(float(k))
+            target = (k // DENREMUX_TARGET + 1) * DENREMUX_TARGET
+    segments = [(s, cuts[i + 1] if i + 1 < len(cuts) else float(SECONDS)) for i, s in enumerate(cuts)]
+    restart = max(s for s, _ in segments if s <= case.start)
+
+    def job(name, start):
+        work = WORK / case.id / name
+        shutil.rmtree(work, ignore_errors=True)
+        work.mkdir(parents=True)
+        # A copy seeks to the keyframe at or before -ss; a hair past the restart keyframe lands on it.
+        seek = ["-ss", f"{start + 0.02:.6f}"] if start else []
+        run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", *seek, "-i", encoded, "-map", "0:V:0", "-map", "0:a:0",
+             "-c", "copy", *tag, "-copyts", "-start_at_zero", "-max_muxing_queue_size", "1024",
+             "-avoid_negative_ts", "disabled", "-f", "hls", "-hls_time", "0", "-hls_segment_type", "fmp4",
+             "-hls_segment_options", "movflags=+frag_discont+skip_sidx", "-hls_fmp4_init_filename", "init.mp4",
+             "-hls_playlist_type", "vod", "-hls_segment_filename", str(work / "g%d.m4s"), work / "gops.m3u8"])
+        if start:
+            # A copy seeks to a keyframe at or before the time asked for, and not always the nearest one, so where
+            # the job really began is read from its first fragment's first timestamp.
+            joined = work / "first.mp4"
+            joined.write_bytes((work / "init.mp4").read_bytes() + (work / "g0.m4s").read_bytes())
+            pts = float(subprocess.run(
+                ["ffprobe", "-v", "error", "-select_streams", "v:0", "-read_intervals", "%+#1", "-show_entries",
+                 "packet=pts_time", "-of", "csv=p=0", str(joined)], capture_output=True, text=True).stdout.split()[0])
+            start = min(case.keyframes, key=lambda k: abs(k - pts))
+        gops, at = [], start
+        lines = (work / "gops.m3u8").read_text().splitlines()
+        for i, line in enumerate(lines):
+            if line.startswith("#EXTINF:"):
+                duration = float(line[8:].rstrip(","))
+                gops.append((at, work / lines[i + 1]))
+                at += duration
+        return work, gops
+
+    resumed_work, resumed = job("denremux-resumed", restart)
+    _, first = job("denremux-first", 0.0)
+    shutil.copy(resumed_work / "init.mp4", folder / "init.mp4")
+    playlist = [
+        "#EXTM3U", "#EXT-X-VERSION:7",
+        f"#EXT-X-TARGETDURATION:{int(max(e - s for s, e in segments) + 0.999)}", "#EXT-X-MEDIA-SEQUENCE:0",
+        "#EXT-X-PLAYLIST-TYPE:VOD", "#EXT-X-INDEPENDENT-SEGMENTS",
+        f"#EXT-X-START:TIME-OFFSET={case.start:.3f},PRECISE=YES", '#EXT-X-MAP:URI="init.mp4"',
+    ]
+    for n, (s, e) in enumerate(segments):
+        gops = resumed if s >= restart - 0.05 else first
+        with open(folder / f"seg{n}.m4s", "wb") as sink:
+            for k, (_, path) in enumerate(g for g in gops if s - 0.05 <= g[0] < e - 0.05):
+                data = path.read_bytes()
+                if k and data[4:8] == b"styp":
+                    data = data[struct.unpack(">I", data[:4])[0]:]
+                sink.write(data)
+        playlist += [f"#EXTINF:{e - s:.6f},", f"seg{n}.m4s"]
+    playlist += ["#EXT-X-ENDLIST", ""]
+    (folder / "media.m3u8").write_text("\n".join(playlist))
+    (folder / "master.m3u8").write_text(master_playlist(case, codecs, bandwidth, "media.m3u8"))
+    return {"format": "hls-denremux", "url": f"media/{case.id}/denremux/master.m3u8",
+            "mime": "application/vnd.apple.mpegurl", "start": case.start}
 
 
 def main():
