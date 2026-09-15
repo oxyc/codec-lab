@@ -440,23 +440,25 @@ async function play(c, format, method) {
   // Play: to the end of a short clip, or PLAY_SECONDS past the first frame of a long one.
   const deadline = started + TIMEOUT_MS + (format.delay || 0) * 1000;
   let heard = false;
+  // Whether playback got where it was going, rather than running out of time on the way.
+  let reached = false;
   while (!failure && !hidden && performance.now() < deadline && result.result !== 'blocked') {
     if (c.codecs.audio && !heard) heard = audioHeard() === true;
     const duration = Number.isFinite(video.duration) ? video.duration : Infinity;
-    if (video.ended) { result.reachedEnd = true; break; }
+    if (video.ended) { result.reachedEnd = reached = true; break; }
     if (audioOnly) {
-      if ((heard || unheard) && video.currentTime >= Math.min(duration - 0.3, 1)) break;
+      if ((heard || unheard) && video.currentTime >= Math.min(duration - 0.3, 1)) { reached = true; break; }
     } else if (result.ttffMs !== null) {
       const from = result.startedAt ?? 0;
       const target = Math.min(duration - 0.3, from + PLAY_SECONDS);
-      if (video.currentTime >= target) { result.reachedEnd = target >= duration - 0.3; break; }
+      if (video.currentTime >= target) { result.reachedEnd = target >= duration - 0.3; reached = true; break; }
     }
     await sleep(200);
   }
   if (c.codecs.audio) heard = heard || audioHeard() === true;
   const frames = frameCount(result);
   const moved = video.currentTime - (result.startedAt ?? 0);
-  const playedPicture = audioOnly || (video.videoWidth > 0 && frames >= FRAMES_TO_PASS && moved >= Math.min(1.5, PLAY_SECONDS));
+  const playedPicture = audioOnly || (reached && video.videoWidth > 0 && frames >= FRAMES_TO_PASS && moved >= Math.min(1.5, PLAY_SECONDS));
   const playedSound = !audioOnly || heard || ((audioProbe?.kind === 'none' || unheard) && video.currentTime >= 1);
 
   if (result.result !== 'blocked') {
