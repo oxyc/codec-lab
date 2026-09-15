@@ -21,7 +21,9 @@ delivery: file, HLS in the browser's own player, HLS through hls.js (with Den We
 
 A test passes when the picture has a size, at least 15 frames are presented (`requestVideoFrameCallback`, else
 `getVideoPlaybackQuality`) and playback reaches the end of the clip, or six seconds past its first frame for a long
-stream. Audio counts when bytes were decoded (`webkitAudioDecodedByteCount`) or an analyser hears it; playback is
+stream. Audio counts when bytes were decoded (`webkitAudioDecodedByteCount`) or an analyser hears it. Neither hears every
+path (WebKit on iOS routes HLS, Media Source and WebM around the analyser), so each path is first tried on a plain
+AAC or Opus clip, and one that comes through silent reports audio as not measurable rather than missing; playback is
 unmuted at volume 0 where the browser allows it (iOS ignores volume, so it stays muted there). A pass is only partly
 one (~) when audio or cues are missing, the first cue isn't at 0.5 s, a seek to 80 % and back doesn't recover, playback
 didn't start at `EXT-X-START`, more than 5 % of frames dropped, or it played only muted. Each result records time to

@@ -1,5 +1,5 @@
 {
- "seconds": 60,
+ "seconds": 4,
  "cases": [
   {
    "id": "h264-baseline-30",
@@ -2664,6 +2664,12 @@
    "spatial": false,
    "subtitles": null,
    "formats": [
+    {
+     "format": "hls-slow-init-0",
+     "url": "slow/init-0/media/h264-main-31/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl",
+     "delay": 0
+    },
     {
      "format": "hls-slow-init-3",
      "url": "slow/init-3/media/h264-main-31/hls/master.m3u8",

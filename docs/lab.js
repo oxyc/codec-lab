@@ -258,6 +258,32 @@ function audioHeard() {
   return null;
 }
 
+// Neither probe hears every way of playing: WebKit on iOS routes HLS, Media Source and WebM around the analyser, and
+// a decoded-byte counter may count only file playback. Each way is first tried on a clip whose AAC or Opus every
+// browser playing that way decodes, and one that comes through silent reports audio as unmeasured, not missing.
+const pathOf = (format, method) => (method === 'file' && format.format === 'webm' ? 'file-webm' : method);
+const CALIBRATION = {
+  file: ['audio-aac-lc-20', 'mp4'], 'file-webm': ['audio-opus-20-webm', 'webm'], native: ['audio-aac-lc-20', 'hls-fmp4'],
+  'hls.js': ['audio-aac-lc-20', 'hls-fmp4'], 'dash.js': ['h264-high-40', 'dash'],
+};
+let deaf = new Set();
+
+async function calibrateAudio(steps) {
+  deaf = new Set();
+  if (!audioProbe || audioProbe.kind === 'none') return;
+  const paths = new Set(steps.filter(([, f, m]) => f && !m.startsWith('-')).map(([, f, m]) => pathOf(f, m)));
+  for (const path of paths) {
+    const [id, name] = CALIBRATION[path] || [];
+    const c = cases.find((x) => x.id === id);
+    const f = c?.formats.find((x) => x.format === name);
+    if (!f) continue;
+    $('now').textContent = `Checking audio can be heard: ${c.id} · ${formatLabel(f.format)} · ${path}`;
+    const r = await play(c, f, path === 'file-webm' ? 'file' : path);
+    if (r.result === 'played' && r.audio === false) deaf.add(path);
+  }
+  report.audioUnmeasurable = [...deaf];
+}
+
 let hls = null;
 let dash = null;
 let held = [];
@@ -318,6 +344,7 @@ async function play(c, format, method) {
   held = [];
   const started = performance.now();
   const audioOnly = !c.codecs.video;
+  const unheard = deaf.has(pathOf(format, method));
   const result = {
     case: c.id, format: format.format, method, url: format.url, result: 'stalled',
     width: 0, height: 0, frames: 0, time: 0, ttffMs: null, droppedPct: null, reachedEnd: false,
@@ -416,7 +443,7 @@ async function play(c, format, method) {
     const duration = Number.isFinite(video.duration) ? video.duration : Infinity;
     if (video.ended) { result.reachedEnd = true; break; }
     if (audioOnly) {
-      if (heard && video.currentTime >= Math.min(duration - 0.3, 1)) break;
+      if ((heard || unheard) && video.currentTime >= Math.min(duration - 0.3, 1)) break;
     } else if (result.ttffMs !== null) {
       const from = result.startedAt ?? 0;
       const target = Math.min(duration - 0.3, from + PLAY_SECONDS);
@@ -428,7 +455,7 @@ async function play(c, format, method) {
   const frames = frameCount(result);
   const moved = video.currentTime - (result.startedAt ?? 0);
   const playedPicture = audioOnly || (video.videoWidth > 0 && frames >= FRAMES_TO_PASS && moved >= Math.min(1.5, PLAY_SECONDS));
-  const playedSound = !audioOnly || heard || (audioProbe?.kind === 'none' && video.currentTime >= 1);
+  const playedSound = !audioOnly || heard || ((audioProbe?.kind === 'none' || unheard) && video.currentTime >= 1);
 
   if (result.result !== 'blocked') {
     if (failure) result.result = 'failed';
@@ -462,7 +489,7 @@ async function play(c, format, method) {
     const dropped = quality.droppedVideoFrames - (since?.droppedVideoFrames || 0);
     if (total > 0) result.droppedPct = Math.round((dropped / total) * 1000) / 10;
   }
-  if (c.codecs.audio) result.audio = heard;
+  if (c.codecs.audio) result.audio = heard || (unheard ? null : false);
   if (c.subtitles) {
     result.subtitles = cuesLoaded();
     const first = [...video.textTracks].flatMap((t) => [...(t.cues || [])]).sort((a, b) => a.startTime - b.startTime)[0];
@@ -529,7 +556,8 @@ function playChip(r) {
   const mark = r.result === 'played' ? (partly.length ? '~' : '✓') : '✗';
   const detail = [
     `${r.result} in ${r.ms} ms`, r.ttffMs !== null ? `first frame ${r.ttffMs} ms` : '', `${r.width}×${r.height}`,
-    `${r.frames} frames`, ...partly, r.error ? JSON.stringify(r.error) : '',
+    `${r.frames} frames`, ...partly, r.audio === null ? 'audio not measurable this way' : '',
+    r.error ? JSON.stringify(r.error) : '',
   ].filter(Boolean).join(' · ');
   return chip(`${label} ${mark}`, cls, detail);
 }
@@ -677,6 +705,7 @@ async function runPlayback() {
   const progress = $('progress');
   progress.hidden = false;
   progress.max = steps.length;
+  await calibrateAudio(steps);
   let done = 0;
   for (const [c, f, m] of steps) {
     if (stopping) break;

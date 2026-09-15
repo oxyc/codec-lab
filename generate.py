@@ -346,11 +346,12 @@ CASES = [
          ["hls-denremux"], seconds=60, keyframes=RELEASE_KEYFRAMES, start=31.2,
          note="The Hobbit's shape from #26: a cropped HDR10 copy, resumed mid-film."),
     # A service worker (docs/sw.js) holds a response back: Apple's player gives up on an init.mp4 after about five
-    # seconds and reports a decode error.
+    # seconds and reports a decode error. init-0 goes through the service worker without waiting, so a player that
+    # can't play through one at all shows up there rather than as a slow-start failure.
     Case("slow-init", "delivery", "Slow responses: the same H.264 HLS with init.mp4 or a segment held back",
          external=[
              *[{"format": f"hls-slow-init-{s}", "url": f"slow/init-{s}/media/h264-main-31/hls/master.m3u8",
-                "mime": "application/vnd.apple.mpegurl", "delay": s} for s in (3, 6, 10)],
+                "mime": "application/vnd.apple.mpegurl", "delay": s} for s in (0, 3, 6, 10)],
              {"format": "hls-slow-seg1-10", "url": "slow/seg1-10/media/h264-main-31/hls/master.m3u8",
               "mime": "application/vnd.apple.mpegurl", "delay": 10},
          ],
@@ -1034,7 +1035,8 @@ def package_format(case, fmt, encoded, probe, out, tag, codecs, bandwidth):
                  "-hls_playlist_type", "vod", *seg,
                  "-hls_segment_filename", str(folder / ("seg%d.ts" if ts else "seg%d.m4s")), folder / "media.m3u8"])
             if case.subtitles == "webvtt":
-                (folder / "subs.vtt").write_text(WEBVTT)
+                # MPEGTS maps the cues onto the media's own clock: MPEG-TS starts at ffmpeg's 1.4 s, fMP4 at zero.
+                (folder / "subs.vtt").write_text(WEBVTT if ts else WEBVTT.replace("MPEGTS:126000", "MPEGTS:0"))
                 (folder / "subs.m3u8").write_text(
                     f"#EXTM3U\n#EXT-X-TARGETDURATION:{SECONDS}\n#EXT-X-VERSION:3\n#EXT-X-MEDIA-SEQUENCE:0\n"
                     f"#EXT-X-PLAYLIST-TYPE:VOD\n#EXTINF:{SECONDS}.0,\nsubs.vtt\n#EXT-X-ENDLIST\n")
