@@ -1,0 +1,2301 @@
+{
+ "seconds": 4,
+ "cases": [
+  {
+   "id": "h264-baseline-30",
+   "group": "h264",
+   "title": "H.264 Constrained Baseline 3.0, 640\u00d7360",
+   "note": "",
+   "codecs": {
+    "video": "avc1.42C01E",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-baseline-30/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.42C01E,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-baseline-30/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-ts",
+     "url": "media/h264-baseline-30/ts/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mkv",
+     "url": "media/h264-baseline-30/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.42C01E,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "h264-main-31",
+   "group": "h264",
+   "title": "H.264 Main 3.1, 1280\u00d7720",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401F",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-main-31/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401F,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-main-31/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-ts",
+     "url": "media/h264-main-31/ts/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "h264-high-40",
+   "group": "h264",
+   "title": "H.264 High 4.0, 1920\u00d71080",
+   "note": "",
+   "codecs": {
+    "video": "avc1.640028",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-high-40/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.640028,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-high-40/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-ts",
+     "url": "media/h264-high-40/ts/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "dash",
+     "url": "media/h264-high-40/dash/manifest.mpd",
+     "mime": "application/dash+xml"
+    },
+    {
+     "format": "mkv",
+     "url": "media/h264-high-40/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.640028,mp4a.40.2\""
+    },
+    {
+     "format": "mov",
+     "url": "media/h264-high-40/clip.mov",
+     "mime": "video/quicktime; codecs=\"avc1.640028,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "h264-high-42-60fps",
+   "group": "h264",
+   "title": "H.264 High 4.2, 1080p60",
+   "note": "",
+   "codecs": {
+    "video": "avc1.64002A",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 60.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-high-42-60fps/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.64002A,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-high-42-60fps/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "h264-high-51-2160p",
+   "group": "h264",
+   "title": "H.264 High 5.1, 3840\u00d72160",
+   "note": "",
+   "codecs": {
+    "video": "avc1.640033",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 3840,
+   "height": 2160,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-high-51-2160p/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.640033,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-high-51-2160p/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "h264-high10",
+   "group": "h264",
+   "title": "H.264 High 10, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "avc1.6E0028",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-high10/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.6E0028,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-high10/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mkv",
+     "url": "media/h264-high10/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.6E0028,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "h264-high422",
+   "group": "h264",
+   "title": "H.264 High 4:2:2 10-bit, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "avc1.7A0028",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-high422/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.7A0028,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-high422/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "h264-high444",
+   "group": "h264",
+   "title": "H.264 High 4:4:4 Predictive, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "avc1.F40028",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-high444/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.F40028,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-high444/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "h264-fps-23976",
+   "group": "framerate",
+   "title": "H.264 High, 720p at 23.976 fps",
+   "note": "",
+   "codecs": {
+    "video": "avc1.64001F",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 23.976,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-fps-23976/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.64001F,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-fps-23976/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "h264-fps-25",
+   "group": "framerate",
+   "title": "H.264 High, 720p at 25 fps",
+   "note": "",
+   "codecs": {
+    "video": "avc1.64001F",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 25.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-fps-25/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.64001F,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-fps-25/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "h264-fps-2997",
+   "group": "framerate",
+   "title": "H.264 High, 720p at 29.97 fps",
+   "note": "",
+   "codecs": {
+    "video": "avc1.64001F",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 29.97,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-fps-2997/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.64001F,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-fps-2997/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "h264-fps-50",
+   "group": "framerate",
+   "title": "H.264 High, 720p at 50 fps",
+   "note": "",
+   "codecs": {
+    "video": "avc1.640020",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 50.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-fps-50/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.640020,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-fps-50/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "h264-fps-5994",
+   "group": "framerate",
+   "title": "H.264 High, 720p at 59.94 fps",
+   "note": "",
+   "codecs": {
+    "video": "avc1.640020",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 59.94,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-fps-5994/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.640020,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-fps-5994/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "h264-fps-120",
+   "group": "framerate",
+   "title": "H.264 High, 720p at 120 fps",
+   "note": "",
+   "codecs": {
+    "video": "avc1.64002A",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 120.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/h264-fps-120/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.64002A,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/h264-fps-120/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "hevc-main-40",
+   "group": "hevc",
+   "title": "HEVC Main 4.0, 1080p (hvc1)",
+   "note": "",
+   "codecs": {
+    "video": "hvc1.1.6.L120.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main-40/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.1.6.L120.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main-40/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-ts",
+     "url": "media/hevc-main-40/ts/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mkv",
+     "url": "media/hevc-main-40/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"hvc1.1.6.L120.90,mp4a.40.2\""
+    },
+    {
+     "format": "mov",
+     "url": "media/hevc-main-40/clip.mov",
+     "mime": "video/quicktime; codecs=\"hvc1.1.6.L120.90,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "hevc-main-40-hev1",
+   "group": "hevc",
+   "title": "HEVC Main 4.0, 1080p, tagged hev1",
+   "note": "Parameter sets in-band and the sample entry named hev1 rather than hvc1.",
+   "codecs": {
+    "video": "hev1.1.6.L120.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main-40-hev1/clip.mp4",
+     "mime": "video/mp4; codecs=\"hev1.1.6.L120.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main-40-hev1/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "hevc-main10-40",
+   "group": "hevc",
+   "title": "HEVC Main 10 4.0, 1080p SDR",
+   "note": "",
+   "codecs": {
+    "video": "hvc1.2.4.L120.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main10-40/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.L120.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main10-40/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "dash",
+     "url": "media/hevc-main10-40/dash/manifest.mpd",
+     "mime": "application/dash+xml"
+    },
+    {
+     "format": "mkv",
+     "url": "media/hevc-main10-40/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"hvc1.2.4.L120.90,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "hevc-main-51-2160p",
+   "group": "hevc",
+   "title": "HEVC Main 5.1 Main tier, 2160p",
+   "note": "",
+   "codecs": {
+    "video": "hvc1.1.6.L153.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 3840,
+   "height": 2160,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main-51-2160p/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.1.6.L153.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main-51-2160p/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "hevc-main10-51-high-tier",
+   "group": "hevc",
+   "title": "HEVC Main 10 5.1 High tier, 2160p",
+   "note": "A UHD Blu-ray remux's tier.",
+   "codecs": {
+    "video": "hvc1.2.4.H153.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 3840,
+   "height": 2160,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main10-51-high-tier/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.H153.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main10-51-high-tier/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "hevc-main-61-4320p",
+   "group": "hevc",
+   "title": "HEVC Main 6.1, 7680\u00d74320",
+   "note": "",
+   "codecs": {
+    "video": "hvc1.1.6.L183.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 7680,
+   "height": 4320,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main-61-4320p/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.1.6.L183.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main-61-4320p/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "hevc-rext-422-10",
+   "group": "hevc",
+   "title": "HEVC Main 4:2:2 10 (RExt), 1080p",
+   "note": "",
+   "codecs": {
+    "video": "hvc1.4.10.L123.9D.8",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-rext-422-10/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.4.10.L123.9D.8,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-rext-422-10/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "hevc-rext-444-8",
+   "group": "hevc",
+   "title": "HEVC Main 4:4:4 (RExt), 1080p",
+   "note": "",
+   "codecs": {
+    "video": "hvc1.4.10.L123.9E.8",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-rext-444-8/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.4.10.L123.9E.8,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-rext-444-8/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "hevc-main10-pq",
+   "group": "hdr",
+   "title": "HEVC Main 10 HDR10 (PQ), 1080p",
+   "note": "hls-fmp4-bare is the same stream with no VIDEO-RANGE or FRAME-RATE in its master playlist.",
+   "codecs": {
+    "video": "hvc1.2.4.L123.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "PQ",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main10-pq/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.L123.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main10-pq/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-fmp4-bare",
+     "url": "media/hevc-main10-pq/hls/master-bare.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "dash",
+     "url": "media/hevc-main10-pq/dash/manifest.mpd",
+     "mime": "application/dash+xml"
+    },
+    {
+     "format": "mkv",
+     "url": "media/hevc-main10-pq/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"hvc1.2.4.L123.90,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "hevc-main10-hdr10plus",
+   "group": "hdr",
+   "title": "HEVC Main 10 HDR10+ (PQ with dynamic metadata), 1080p",
+   "note": "A player without HDR10+ shows the HDR10 base; what is tested is that it plays.",
+   "codecs": {
+    "video": "hvc1.2.4.L123.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "PQ",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main10-hdr10plus/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.L123.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main10-hdr10plus/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mkv",
+     "url": "media/hevc-main10-hdr10plus/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"hvc1.2.4.L123.90,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "hevc-main10-pq-2160p",
+   "group": "hdr",
+   "title": "HEVC Main 10 HDR10 (PQ) 5.1, 2160p",
+   "note": "",
+   "codecs": {
+    "video": "hvc1.2.4.L153.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "PQ",
+   "width": 3840,
+   "height": 2160,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main10-pq-2160p/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.L153.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main10-pq-2160p/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "hevc-main10-hlg",
+   "group": "hdr",
+   "title": "HEVC Main 10 HLG, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "hvc1.2.4.L123.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "HLG",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main10-hlg/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.L123.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main10-hlg/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-fmp4-bare",
+     "url": "media/hevc-main10-hlg/hls/master-bare.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "hevc-dv-p5",
+   "group": "dolby-vision",
+   "title": "Dolby Vision profile 5, 1080p",
+   "note": "Profile 5's base layer is meant to be IPTPQc2, so its picture is off in colour here; what is tested is whether it plays.",
+   "codecs": {
+    "video": "dvh1.05.04",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "PQ",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-dv-p5/clip.mp4",
+     "mime": "video/mp4; codecs=\"dvh1.05.04,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-dv-p5/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "hevc-dv-p81",
+   "group": "dolby-vision",
+   "title": "Dolby Vision profile 8.1, 1080p",
+   "note": "",
+   "codecs": {
+    "video": {
+     "base": "hvc1.2.4.L123.90",
+     "dolby_vision": "dvh1.08.04",
+     "compat": 1
+    },
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "PQ",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-dv-p81/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.L123.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-dv-p81/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "hevc-dv-p84",
+   "group": "dolby-vision",
+   "title": "Dolby Vision profile 8.4, 1080p",
+   "note": "",
+   "codecs": {
+    "video": {
+     "base": "hvc1.2.4.L123.90",
+     "dolby_vision": "dvh1.08.04",
+     "compat": 4
+    },
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "HLG",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-dv-p84/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.L123.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-dv-p84/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "av1-main10-pq",
+   "group": "hdr",
+   "title": "AV1 Main 10-bit HDR10 (PQ), 1080p",
+   "note": "",
+   "codecs": {
+    "video": "av01.0.08M.10.0.110.09.16.09.0",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "PQ",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/av1-main10-pq/clip.mp4",
+     "mime": "video/mp4; codecs=\"av01.0.08M.10.0.110.09.16.09.0,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/av1-main10-pq/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "av1-main10-pq-webm",
+   "group": "hdr",
+   "title": "AV1 Main 10-bit HDR10 (PQ) in WebM with Opus, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "av01.0.08M.10.0.110.09.16.09.0",
+    "audio": "opus"
+   },
+   "video_range": "PQ",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "webm",
+     "url": "media/av1-main10-pq-webm/clip.webm",
+     "mime": "video/webm; codecs=\"av01.0.08M.10.0.110.09.16.09.0,opus\""
+    }
+   ]
+  },
+  {
+   "id": "av1-main10-hlg",
+   "group": "hdr",
+   "title": "AV1 Main 10-bit HLG, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "av01.0.08M.10.0.110.09.18.09.0",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "HLG",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/av1-main10-hlg/clip.mp4",
+     "mime": "video/mp4; codecs=\"av01.0.08M.10.0.110.09.18.09.0,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/av1-main10-hlg/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "vp9-p2-pq",
+   "group": "hdr",
+   "title": "VP9 Profile 2 10-bit HDR10 (PQ), 1080p",
+   "note": "",
+   "codecs": {
+    "video": "vp09.02.40.10.01.09.16.09.00",
+    "audio": "opus"
+   },
+   "video_range": "PQ",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "webm",
+     "url": "media/vp9-p2-pq/clip.webm",
+     "mime": "video/webm; codecs=\"vp9,opus\""
+    },
+    {
+     "format": "mp4",
+     "url": "media/vp9-p2-pq/clip.mp4",
+     "mime": "video/mp4; codecs=\"vp09.02.40.10.01.09.16.09.00,opus\""
+    }
+   ]
+  },
+  {
+   "id": "av1-main-8bit",
+   "group": "av1",
+   "title": "AV1 Main 8-bit, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "av01.0.08M.08",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/av1-main-8bit/clip.mp4",
+     "mime": "video/mp4; codecs=\"av01.0.08M.08,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/av1-main-8bit/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "dash",
+     "url": "media/av1-main-8bit/dash/manifest.mpd",
+     "mime": "application/dash+xml"
+    },
+    {
+     "format": "mkv",
+     "url": "media/av1-main-8bit/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"av01.0.08M.08,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "av1-main-10bit",
+   "group": "av1",
+   "title": "AV1 Main 10-bit SDR, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "av01.0.08M.10",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/av1-main-10bit/clip.mp4",
+     "mime": "video/mp4; codecs=\"av01.0.08M.10,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/av1-main-10bit/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "av1-main10-webm",
+   "group": "av1",
+   "title": "AV1 Main 10-bit in WebM with Opus, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "av01.0.08M.10",
+    "audio": "opus"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "webm",
+     "url": "media/av1-main10-webm/clip.webm",
+     "mime": "video/webm; codecs=\"av01.0.08M.10,opus\""
+    }
+   ]
+  },
+  {
+   "id": "av1-main-2160p",
+   "group": "av1",
+   "title": "AV1 Main 10-bit, 2160p",
+   "note": "",
+   "codecs": {
+    "video": "av01.0.12M.10",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 3840,
+   "height": 2160,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/av1-main-2160p/clip.mp4",
+     "mime": "video/mp4; codecs=\"av01.0.12M.10,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/av1-main-2160p/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "av1-main-4320p",
+   "group": "av1",
+   "title": "AV1 Main 8-bit, 7680\u00d74320",
+   "note": "",
+   "codecs": {
+    "video": "av01.0.16M.08",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 7680,
+   "height": 4320,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/av1-main-4320p/clip.mp4",
+     "mime": "video/mp4; codecs=\"av01.0.16M.08,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/av1-main-4320p/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "av1-high-444",
+   "group": "av1",
+   "title": "AV1 High 4:4:4 8-bit, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "av01.1.08M.08",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/av1-high-444/clip.mp4",
+     "mime": "video/mp4; codecs=\"av01.1.08M.08,mp4a.40.2\""
+    },
+    {
+     "format": "mkv",
+     "url": "media/av1-high-444/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"av01.1.08M.08,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "vp9-p0",
+   "group": "vp9",
+   "title": "VP9 Profile 0, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "vp09.00.40.08.01.02.02.01.00",
+    "audio": "opus"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "webm",
+     "url": "media/vp9-p0/clip.webm",
+     "mime": "video/webm; codecs=\"vp9,opus\""
+    },
+    {
+     "format": "mp4",
+     "url": "media/vp9-p0/clip.mp4",
+     "mime": "video/mp4; codecs=\"vp09.00.40.08.01.02.02.01.00,opus\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/vp9-p0/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "dash",
+     "url": "media/vp9-p0/dash/manifest.mpd",
+     "mime": "application/dash+xml"
+    }
+   ]
+  },
+  {
+   "id": "vp9-p0-2160p",
+   "group": "vp9",
+   "title": "VP9 Profile 0, 2160p",
+   "note": "",
+   "codecs": {
+    "video": "vp09.00.50.08.01.02.02.01.00",
+    "audio": "opus"
+   },
+   "video_range": "SDR",
+   "width": 3840,
+   "height": 2160,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "webm",
+     "url": "media/vp9-p0-2160p/clip.webm",
+     "mime": "video/webm; codecs=\"vp9,opus\""
+    },
+    {
+     "format": "mp4",
+     "url": "media/vp9-p0-2160p/clip.mp4",
+     "mime": "video/mp4; codecs=\"vp09.00.50.08.01.02.02.01.00,opus\""
+    }
+   ]
+  },
+  {
+   "id": "vp9-p1-444",
+   "group": "vp9",
+   "title": "VP9 Profile 1 4:4:4, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "vp09.01.40.08.03.02.02.01.00",
+    "audio": "opus"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "webm",
+     "url": "media/vp9-p1-444/clip.webm",
+     "mime": "video/webm; codecs=\"vp9,opus\""
+    },
+    {
+     "format": "mp4",
+     "url": "media/vp9-p1-444/clip.mp4",
+     "mime": "video/mp4; codecs=\"vp09.01.40.08.03.02.02.01.00,opus\""
+    }
+   ]
+  },
+  {
+   "id": "vp8",
+   "group": "legacy",
+   "title": "VP8, 720p",
+   "note": "",
+   "codecs": {
+    "video": "vp8",
+    "audio": "vorbis"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "webm",
+     "url": "media/vp8/clip.webm",
+     "mime": "video/webm; codecs=\"vp8,vorbis\""
+    }
+   ]
+  },
+  {
+   "id": "theora",
+   "group": "legacy",
+   "title": "Theora, 640\u00d7360",
+   "note": "",
+   "codecs": {
+    "video": "theora",
+    "audio": "vorbis"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "ogg",
+     "url": "media/theora/clip.ogv",
+     "mime": "video/ogg; codecs=\"theora,vorbis\""
+    }
+   ]
+  },
+  {
+   "id": "mpeg4-part2",
+   "group": "legacy",
+   "title": "MPEG-4 Part 2 (Simple), 640\u00d7360",
+   "note": "",
+   "codecs": {
+    "video": "mp4v.20.1",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/mpeg4-part2/clip.mp4",
+     "mime": "video/mp4; codecs=\"mp4v.20.1,mp4a.40.2\""
+    },
+    {
+     "format": "mkv",
+     "url": "media/mpeg4-part2/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"mp4v.20.1,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "mpeg2",
+   "group": "legacy",
+   "title": "MPEG-2 Main, 720\u00d7480",
+   "note": "",
+   "codecs": {
+    "video": "mp4v.61",
+    "audio": "mp4a.6B"
+   },
+   "video_range": "SDR",
+   "width": 720,
+   "height": 480,
+   "fps": 29.97,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "hls-ts",
+     "url": "media/mpeg2/ts/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "ts",
+     "url": "media/mpeg2/clip.ts",
+     "mime": "video/mp2t; codecs=\"mp4v.61,mp4a.6B\""
+    },
+    {
+     "format": "mkv",
+     "url": "media/mpeg2/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"mp4v.61,mp4a.6B\""
+    }
+   ]
+  },
+  {
+   "id": "prores-422",
+   "group": "legacy",
+   "title": "Apple ProRes 422, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "apcn",
+    "audio": "lpcm"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mov",
+     "url": "media/prores-422/clip.mov",
+     "mime": "video/quicktime; codecs=\"apcn,lpcm\""
+    }
+   ]
+  },
+  {
+   "id": "container-avi-xvid",
+   "group": "containers",
+   "title": "AVI: Xvid (MPEG-4 Part 2) with MP3, 640\u00d7360",
+   "note": "",
+   "codecs": {
+    "video": "mp4v.20.3",
+    "audio": "mp4a.6B"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "avi",
+     "url": "media/container-avi-xvid/clip.avi",
+     "mime": "video/x-msvideo; codecs=\"mp4v.20.3,mp4a.6B\""
+    },
+    {
+     "format": "mkv",
+     "url": "media/container-avi-xvid/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"mp4v.20.3,mp4a.6B\""
+    }
+   ]
+  },
+  {
+   "id": "container-ts-h264",
+   "group": "containers",
+   "title": "MPEG-TS and M2TS files: H.264 High with AAC, 720p",
+   "note": "Progressive transport-stream files, not HLS.",
+   "codecs": {
+    "video": "avc1.64001F",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "ts",
+     "url": "media/container-ts-h264/clip.ts",
+     "mime": "video/mp2t; codecs=\"avc1.64001F,mp4a.40.2\""
+    },
+    {
+     "format": "m2ts",
+     "url": "media/container-ts-h264/clip.m2ts",
+     "mime": "video/mp2t; codecs=\"avc1.64001F,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "container-m2ts-hevc-ac3",
+   "group": "containers",
+   "title": "M2TS and MPEG-TS files: HEVC Main 10 with AC-3 5.1, 1080p",
+   "note": "",
+   "codecs": {
+    "video": "hvc1.2.4.L123.90",
+    "audio": "ac-3"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 6,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "m2ts",
+     "url": "media/container-m2ts-hevc-ac3/clip.m2ts",
+     "mime": "video/mp2t; codecs=\"hvc1.2.4.L123.90,ac-3\""
+    },
+    {
+     "format": "ts",
+     "url": "media/container-m2ts-hevc-ac3/clip.ts",
+     "mime": "video/mp2t; codecs=\"hvc1.2.4.L123.90,ac-3\""
+    }
+   ]
+  },
+  {
+   "id": "container-flv-h264",
+   "group": "containers",
+   "title": "FLV: H.264 Main with AAC, 720p",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401F",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1280,
+   "height": 720,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "flv",
+     "url": "media/container-flv-h264/clip.flv",
+     "mime": "video/x-flv; codecs=\"avc1.4D401F,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "audio-aac-lc-20",
+   "group": "audio",
+   "title": "AAC-LC stereo",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-aac-lc-20/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-aac-lc-20/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-ts",
+     "url": "media/audio-aac-lc-20/ts/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mkv",
+     "url": "media/audio-aac-lc-20/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "audio-aac-lc-51",
+   "group": "audio",
+   "title": "AAC-LC 5.1",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 6,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-aac-lc-51/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-aac-lc-51/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mkv",
+     "url": "media/audio-aac-lc-51/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "audio-aac-lc-71",
+   "group": "audio",
+   "title": "AAC-LC 7.1",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 8,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-aac-lc-71/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-aac-lc-71/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "audio-he-aac-v1",
+   "group": "audio",
+   "title": "HE-AAC v1 stereo",
+   "note": "AudioToolbox's encoder: made on a Mac.",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.40.5"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-he-aac-v1/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,mp4a.40.5\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-he-aac-v1/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "audio-he-aac-v2",
+   "group": "audio",
+   "title": "HE-AAC v2 stereo",
+   "note": "AudioToolbox's encoder: made on a Mac.",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.40.29"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-he-aac-v2/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,mp4a.40.29\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-he-aac-v2/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "audio-mp3-20",
+   "group": "audio",
+   "title": "MP3 stereo",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.6B"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-mp3-20/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,mp4a.6B\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-mp3-20/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-ts",
+     "url": "media/audio-mp3-20/ts/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mkv",
+     "url": "media/audio-mp3-20/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,mp4a.6B\""
+    }
+   ]
+  },
+  {
+   "id": "audio-opus-20",
+   "group": "audio",
+   "title": "Opus stereo",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "opus"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-opus-20/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,opus\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-opus-20/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mkv",
+     "url": "media/audio-opus-20/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,opus\""
+    }
+   ]
+  },
+  {
+   "id": "audio-opus-51",
+   "group": "audio",
+   "title": "Opus 5.1",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "opus"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 6,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-opus-51/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,opus\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-opus-51/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mkv",
+     "url": "media/audio-opus-51/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,opus\""
+    }
+   ]
+  },
+  {
+   "id": "audio-vorbis-20",
+   "group": "audio",
+   "title": "Vorbis stereo",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "vorbis"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mkv",
+     "url": "media/audio-vorbis-20/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,vorbis\""
+    }
+   ]
+  },
+  {
+   "id": "audio-flac-20",
+   "group": "audio",
+   "title": "FLAC stereo",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "fLaC"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-flac-20/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,fLaC\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-flac-20/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mkv",
+     "url": "media/audio-flac-20/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,flac\""
+    }
+   ]
+  },
+  {
+   "id": "audio-flac-51",
+   "group": "audio",
+   "title": "FLAC 5.1",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "fLaC"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 6,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-flac-51/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,fLaC\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-flac-51/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mkv",
+     "url": "media/audio-flac-51/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,flac\""
+    }
+   ]
+  },
+  {
+   "id": "audio-alac-20",
+   "group": "audio",
+   "title": "ALAC stereo",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "alac"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-alac-20/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,alac\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-alac-20/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mov",
+     "url": "media/audio-alac-20/clip.mov",
+     "mime": "video/quicktime; codecs=\"avc1.4D401E,alac\""
+    }
+   ]
+  },
+  {
+   "id": "audio-ac3-20",
+   "group": "audio",
+   "title": "AC-3 stereo",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "ac-3"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-ac3-20/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,ac-3\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-ac3-20/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-ts",
+     "url": "media/audio-ac3-20/ts/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mkv",
+     "url": "media/audio-ac3-20/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,ac-3\""
+    }
+   ]
+  },
+  {
+   "id": "audio-ac3-51",
+   "group": "audio",
+   "title": "AC-3 5.1",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "ac-3"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 6,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-ac3-51/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,ac-3\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-ac3-51/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-ts",
+     "url": "media/audio-ac3-51/ts/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "mkv",
+     "url": "media/audio-ac3-51/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,ac-3\""
+    }
+   ]
+  },
+  {
+   "id": "audio-eac3-51",
+   "group": "audio",
+   "title": "E-AC-3 5.1",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "ec-3"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 6,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-eac3-51/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,ec-3\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/audio-eac3-51/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-ts",
+     "url": "media/audio-eac3-51/ts/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "dash",
+     "url": "media/audio-eac3-51/dash/manifest.mpd",
+     "mime": "application/dash+xml"
+    },
+    {
+     "format": "mkv",
+     "url": "media/audio-eac3-51/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,ec-3\""
+    }
+   ]
+  },
+  {
+   "id": "audio-dts-51",
+   "group": "audio",
+   "title": "DTS 5.1",
+   "note": "ffmpeg's DTS encoder is experimental.",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.A9"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 6,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/audio-dts-51/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,mp4a.A9\""
+    },
+    {
+     "format": "mkv",
+     "url": "media/audio-dts-51/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,mp4a.A9\""
+    }
+   ]
+  },
+  {
+   "id": "audio-truehd-51",
+   "group": "audio",
+   "title": "Dolby TrueHD 5.1",
+   "note": "ffmpeg's TrueHD encoder is experimental, and its MP4 muxer refuses TrueHD.",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mlpa"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 6,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mkv",
+     "url": "media/audio-truehd-51/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,mlpa\""
+    }
+   ]
+  },
+  {
+   "id": "audio-pcm-s16-20",
+   "group": "audio",
+   "title": "PCM 16-bit stereo",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "ipcm"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "mov",
+     "url": "media/audio-pcm-s16-20/clip.mov",
+     "mime": "video/quicktime; codecs=\"avc1.4D401E,ipcm\""
+    },
+    {
+     "format": "mkv",
+     "url": "media/audio-pcm-s16-20/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,ipcm\""
+    }
+   ]
+  },
+  {
+   "id": "audio-opus-20-webm",
+   "group": "audio",
+   "title": "Opus stereo in WebM (VP9 video)",
+   "note": "",
+   "codecs": {
+    "video": "vp09.00.21.08.01.02.02.01.00",
+    "audio": "opus"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "webm",
+     "url": "media/audio-opus-20-webm/clip.webm",
+     "mime": "video/webm; codecs=\"vp9,opus\""
+    }
+   ]
+  },
+  {
+   "id": "audio-opus-51-webm",
+   "group": "audio",
+   "title": "Opus 5.1 in WebM (VP9 video)",
+   "note": "",
+   "codecs": {
+    "video": "vp09.00.21.08.01.02.02.01.00",
+    "audio": "opus"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 6,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "webm",
+     "url": "media/audio-opus-51-webm/clip.webm",
+     "mime": "video/webm; codecs=\"vp9,opus\""
+    }
+   ]
+  },
+  {
+   "id": "audio-vorbis-20-webm",
+   "group": "audio",
+   "title": "Vorbis stereo in WebM (VP9 video)",
+   "note": "",
+   "codecs": {
+    "video": "vp09.00.21.08.01.02.02.01.00",
+    "audio": "vorbis"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": false,
+   "formats": [
+    {
+     "format": "webm",
+     "url": "media/audio-vorbis-20-webm/clip.webm",
+     "mime": "video/webm; codecs=\"vp9,vorbis\""
+    }
+   ]
+  },
+  {
+   "id": "subs-webvtt",
+   "group": "subtitles",
+   "title": "WebVTT subtitles (HLS rendition, and a <track> on the MP4)",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": "webvtt",
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/subs-webvtt/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,mp4a.40.2\"",
+     "track": "media/subs-webvtt/subs.vtt"
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/subs-webvtt/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    },
+    {
+     "format": "hls-ts",
+     "url": "media/subs-webvtt/ts/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ]
+  },
+  {
+   "id": "subs-srt-sidecar",
+   "group": "subtitles",
+   "title": "SRT as a <track> on an MP4",
+   "note": "Browsers take WebVTT in <track>; this asks whether any takes SRT.",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": "srt-sidecar",
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/subs-srt-sidecar/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,mp4a.40.2\"",
+     "track": "media/subs-srt-sidecar/subs.srt"
+    }
+   ]
+  },
+  {
+   "id": "subs-srt-embedded",
+   "group": "subtitles",
+   "title": "SRT (SubRip) inside Matroska",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": "subrip",
+   "formats": [
+    {
+     "format": "mkv",
+     "url": "media/subs-srt-embedded/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "subs-ass-embedded",
+   "group": "subtitles",
+   "title": "ASS/SSA inside Matroska",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": "ass",
+   "formats": [
+    {
+     "format": "mkv",
+     "url": "media/subs-ass-embedded/clip.mkv",
+     "mime": "video/x-matroska; codecs=\"avc1.4D401E,mp4a.40.2\""
+    }
+   ]
+  },
+  {
+   "id": "subs-mov-text",
+   "group": "subtitles",
+   "title": "3GPP timed text (mov_text) inside MP4",
+   "note": "",
+   "codecs": {
+    "video": "avc1.4D401E",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 640,
+   "height": 360,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "subtitles": "mov_text",
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/subs-mov-text/clip.mp4",
+     "mime": "video/mp4; codecs=\"avc1.4D401E,mp4a.40.2\""
+    }
+   ]
+  }
+ ]
+}

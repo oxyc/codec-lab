@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Codec Lab</title>
+<link rel="stylesheet" href="lab.css">
+</head>
+<body>
+<header>
+  <h1>Codec Lab</h1>
+  <p class="lede">What this browser says it plays, and what it actually plays: every clip is a short synthetic test
+  pattern, tried as a file, as HLS in the browser's own player, and as HLS through hls.js.</p>
+  <dl id="env" class="env"></dl>
+</header>
+
+<section class="controls">
+  <fieldset id="groups"><legend>Groups</legend></fieldset>
+  <div class="buttons">
+    <button id="run" type="button">Run playback tests</button>
+    <button id="stop" type="button" hidden>Stop</button>
+    <button id="copy" type="button" disabled>Copy report</button>
+    <button id="download" type="button" disabled>Download report</button>
+    <button id="share" type="button" hidden disabled>Share report</button>
+  </div>
+  <p id="status" role="status">Capability probe runs on load. Playback needs a tap, so the browser lets it play.</p>
+  <progress id="progress" value="0" max="1" hidden></progress>
+</section>
+
+<section class="stage">
+  <video id="player" playsinline controls width="480"></video>
+  <p id="now" class="now"></p>
+</section>
+
+<section>
+  <table id="results">
+    <thead>
+      <tr><th scope="col">Case</th><th scope="col">Codecs</th><th scope="col">Says</th><th scope="col">Plays</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<footer>
+  <p>Legend: <span class="chip ok">✓</span> works · <span class="chip bad">✗</span> fails ·
+  <span class="chip part">~</span> partly (video without audio, no cues) · <span class="chip na">–</span> not available here.
+  hls.js <span id="hlsver"></span> (Apache-2.0) and dash.js 5.2.1 (BSD-3-Clause), vendored.</p>
+</footer>
+
+<script src="vendor/hls-1.7.2.min.js"></script>
+<!-- dash.js's legacy build: older TV browsers are among the ones this is for. -->
+<script src="vendor/dash-5.2.1.mediaplayer.min.js"></script>
+<script src="lab.js"></script>
+</body>
+</html>
