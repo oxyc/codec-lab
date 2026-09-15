@@ -1,5 +1,5 @@
 {
- "seconds": 4,
+ "seconds": 30,
  "cases": [
   {
    "id": "h264-baseline-30",
@@ -1402,6 +1402,68 @@
      "mime": "video/mp4; codecs=\"vp09.01.40.08.03.02.02.01.00,opus\""
     }
    ]
+  },
+  {
+   "id": "vp9-p0-1080p30-long",
+   "group": "vp9",
+   "title": "VP9 Profile 0, 1080p30 at 6 Mbit/s, 30 s",
+   "note": "Judged over the whole clip: a stream a browser accepts but never presents stalls part-way.",
+   "codecs": {
+    "video": "vp09.00.40.08.01.02.02.01.00",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/vp9-p0-1080p30-long/clip.mp4",
+     "mime": "video/mp4; codecs=\"vp09.00.40.08.01.02.02.01.00,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/vp9-p0-1080p30-long/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ],
+   "seconds": 30,
+   "play_seconds": 28
+  },
+  {
+   "id": "vp9-p0-1080p60-long",
+   "group": "vp9",
+   "title": "VP9 Profile 0, 1080p60 at 6 Mbit/s, 30 s",
+   "note": "Judged over the whole clip: a stream a browser accepts but never presents stalls part-way.",
+   "codecs": {
+    "video": "vp09.00.40.08.01.02.02.01.00",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 1920,
+   "height": 1080,
+   "fps": 60.0,
+   "audio_channels": 2,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/vp9-p0-1080p60-long/clip.mp4",
+     "mime": "video/mp4; codecs=\"vp09.00.40.08.01.02.02.01.00,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/vp9-p0-1080p60-long/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ],
+   "seconds": 30,
+   "play_seconds": 28
   },
   {
    "id": "vp8",

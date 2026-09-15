@@ -438,7 +438,7 @@ async function play(c, format, method) {
   }
 
   // Play: to the end of a short clip, or PLAY_SECONDS past the first frame of a long one.
-  const deadline = started + TIMEOUT_MS + (format.delay || 0) * 1000;
+  const deadline = started + TIMEOUT_MS + ((format.delay || 0) + (c.play_seconds || 0)) * 1000;
   let heard = false;
   // Whether playback got where it was going, rather than running out of time on the way.
   let reached = false;
@@ -450,7 +450,7 @@ async function play(c, format, method) {
       if ((heard || unheard) && video.currentTime >= Math.min(duration - 0.3, 1)) { reached = true; break; }
     } else if (result.ttffMs !== null) {
       const from = result.startedAt ?? 0;
-      const target = Math.min(duration - 0.3, from + PLAY_SECONDS);
+      const target = Math.min(duration - 0.3, from + (c.play_seconds || PLAY_SECONDS));
       if (video.currentTime >= target) { result.reachedEnd = target >= duration - 0.3; reached = true; break; }
     }
     await sleep(200);

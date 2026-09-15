@@ -97,6 +97,10 @@ class Case:
     start: float = None
     # False: the container names no colours, and only the stream's SPS says what they are.
     container_colour: bool = True
+    # HLS segment length in seconds, and how long the page plays past the first frame where the default six seconds
+    # would stop before a fault that shows late.
+    segment: int = 2
+    play_seconds: int = None
 
 
 AAC = Audio("aac", args=["-b:a", "128k"])
@@ -246,6 +250,14 @@ CASES = [
          Audio("libopus", args=["-b:a", "96k"]), ["webm", "mp4"]),
     Case("vp9-p1-444", "vp9", "VP9 Profile 1 4:4:4, 1080p", vp9(1, "yuv444p", (1920, 1080)),
          Audio("libopus", args=["-b:a", "96k"]), ["webm", "mp4"]),
+    # YouTube's VP9 1080p (itag 616) failed to present on macOS Safari through hls.js: frames decoded, currentTime stuck
+    # at 6.7 s. These two tell a frame-rate fault from VP9 as such, played for their whole length at a streaming bitrate.
+    *[Case(f"vp9-p0-1080p{fps}-long", "vp9", f"VP9 Profile 0, 1080p{fps} at 6 Mbit/s, 30 s",
+           Video("libvpx-vp9", (1920, 1080), str(fps), "yuv420p",
+                 ["-profile:v", "0", "-b:v", "6M", "-deadline", "realtime", "-cpu-used", "8", "-row-mt", "1"]),
+           AAC, ["mp4", "hls-fmp4"], seconds=30, segment=6, play_seconds=28,
+           note="Judged over the whole clip: a stream a browser accepts but never presents stalls part-way.")
+      for fps in (30, 60)],
     Case("vp8", "legacy", "VP8, 720p", Video("libvpx", (1280, 720), "30", "yuv420p", ["-b:v", "1M", "-deadline", "realtime",
          "-cpu-used", "8"]), Audio("libvorbis", args=["-q:a", "4"]), ["webm"]),
     Case("theora", "legacy", "Theora, 640×360", Video("libtheora", args=["-q:v", "6"]), Audio("libvorbis", args=["-q:a", "4"]),
@@ -945,7 +957,7 @@ def package(case):
         "codecs": codecs, "video_range": video_range(case.video),
         "width": case.video.size[0], "height": case.video.size[1], "fps": round(fps_value(case.video.fps), 3),
         "audio_channels": case.audio.channels if case.audio else 0, "spatial": False,
-        "subtitles": case.subtitles, "formats": formats, "seconds": SECONDS,
+        "subtitles": case.subtitles, "formats": formats, "seconds": SECONDS, "play_seconds": case.play_seconds,
     }
 
 
@@ -1031,7 +1043,7 @@ def package_format(case, fmt, encoded, probe, out, tag, codecs, bandwidth):
             seg = [] if ts else ["-hls_segment_type", "fmp4", "-hls_fmp4_init_filename", "init.mp4"]
             source = encoded if ts or not probe.exists() else probe
             run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", source, "-map", "0:v", "-map", "0:a?",
-                 "-c", "copy", *([] if ts else tag), "-strict", "unofficial", "-f", "hls", "-hls_time", "2",
+                 "-c", "copy", *([] if ts else tag), "-strict", "unofficial", "-f", "hls", "-hls_time", str(case.segment),
                  "-hls_playlist_type", "vod", *seg,
                  "-hls_segment_filename", str(folder / ("seg%d.ts" if ts else "seg%d.m4s")), folder / "media.m3u8"])
             if case.subtitles == "webvtt":
