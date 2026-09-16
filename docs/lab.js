@@ -693,20 +693,21 @@ function columnFor(method) {
 }
 
 async function runPlayback() {
-  // One run at a time, decided BEFORE the first await. `autorun=1` calls this directly and so does the
-  // Run button, and the two awaits below used to sit in front of the line that disables the button — so
-  // a press while the audio probe was resolving started a second loop. Both then pushed into one
-  // `report.playback` and drove one <video>, and the report came out with every case twice, frame counts
-  // no clip could contain (a 4 s clip reporting 572 frames), and the same delivery judged both played and
-  // stalled. Two reports were thrown away to this before it was found.
+  // One run at a time, decided BEFORE the first await. The line that disables the button used to sit
+  // after the awaits below, so a second press during the audio probe started a second loop: both pushed
+  // into one `report.playback` and drove one <video>. The report then carried every case twice, frame
+  // counts no clip contains (a four-second clip reporting 572 frames) and the same delivery judged both
+  // played and stalled — with nothing in it saying two runs had happened. Two reports were lost to that.
   if ($('run').disabled) return;
   $('run').disabled = true;
   $('stop').hidden = false;
   if (!audioProbe) setUpAudioProbe();
   // Bounded, because Safari does not resume an AudioContext until the page has been tapped and this
-  // promise simply never settles until then. Unbounded, an autorun start waits here for a tap that is
-  // about to press Run — which is how one run became two. Past the wait, sound reads as unmeasurable
-  // rather than missing (`calibrateAudio`), which is a true answer; a run that never starts is not.
+  // promise does not settle until it does. The press that starts a run is normally that tap, but a
+  // gesture the browser declines to count leaves this waiting for one that will never come, with the
+  // run already holding the lock and the button already disabled. Past the wait, sound reads as
+  // unmeasurable rather than missing (`calibrateAudio`) — a true answer, where a run that never starts
+  // is not one at all.
   if (audioProbe?.ctx?.state === 'suspended')
     await Promise.race([audioProbe.ctx.resume(), sleep(2000)]);
   stopping = false;
@@ -810,5 +811,4 @@ $('stop').addEventListener('click', () => { stopping = true; });
   await runProbe();
   enableReport();
   $('status').textContent = 'Capability probe done. Pick what to test and tap “Run tests”.';
-  if (params.get('autorun') === '1') runPlayback();
 })();

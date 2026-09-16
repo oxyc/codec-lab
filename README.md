@@ -132,7 +132,6 @@ which can exceed a SourceBuffer's quota); that one needs hosting elsewhere.
 - `?mode=codecs|delivery|everything` — which tests Run plays (codecs by default).
 - `?groups=hdr,dolby-vision` — only those groups ticked.
 - `?only=hevc-main10` — only cases whose id starts with it.
-- `?autorun=1` — start playback without a tap (for a driven browser: Safari's `safaridriver`, Playwright).
 - `?report=https://…` — POST the finished report there as JSON.
 
 ## Regenerating the clips
