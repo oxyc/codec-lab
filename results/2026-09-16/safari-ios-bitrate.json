@@ -1,0 +1,741 @@
+{
+ "lab": "codec-lab",
+ "started": "2026-09-16T14:50:25.583Z",
+ "env": {
+  "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+  "platform": "iPhone",
+  "maxTouchPoints": 5,
+  "ios": true,
+  "screen": "393×852 @3x",
+  "dynamicRangeHigh": true,
+  "videoDynamicRangeHigh": false,
+  "colorGamut": "p3",
+  "mediaSource": false,
+  "managedMediaSource": true,
+  "nativeHls": "maybe",
+  "hlsJs": true,
+  "hlsJsVersion": "1.7.2",
+  "dashJs": true,
+  "requestVideoFrameCallback": true,
+  "gpu": "Apple GPU",
+  "serviceWorker": true
+ },
+ "capability": {
+  "hevc-main10-51-high-tier": {
+   "type": "video/mp4; codecs=\"hvc1.2.4.H153.90,mp4a.40.2\"",
+   "canPlayType": "probably",
+   "mse": true,
+   "mediaCapabilities": {
+    "file": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": true
+    },
+    "mediaSource": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": true
+    }
+   },
+   "audio": {
+    "type": "audio/mp4; codecs=\"mp4a.40.2\"",
+    "canPlayType": "probably",
+    "mse": true,
+    "mediaCapabilities": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": false
+    }
+   }
+  },
+  "vp9-p2-pq": {
+   "type": "video/webm; codecs=\"vp09.02.40.10.01.09.16.09.00,opus\"",
+   "canPlayType": "probably",
+   "mse": true,
+   "mediaCapabilities": {
+    "file": {
+     "supported": true,
+     "smooth": true,
+     "powerEfficient": true
+    },
+    "mediaSource": {
+     "supported": true,
+     "smooth": true,
+     "powerEfficient": true
+    }
+   },
+   "audio": {
+    "type": "audio/webm; codecs=\"opus\"",
+    "canPlayType": "probably",
+    "mse": true,
+    "mediaCapabilities": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": false
+    }
+   }
+  },
+  "hevc-main10-51-high-tier-long": {
+   "type": "video/mp4; codecs=\"hvc1.2.4.L153.90,mp4a.40.2\"",
+   "canPlayType": "probably",
+   "mse": true,
+   "mediaCapabilities": {
+    "file": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": true
+    },
+    "mediaSource": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": true
+    }
+   },
+   "audio": {
+    "type": "audio/mp4; codecs=\"mp4a.40.2\"",
+    "canPlayType": "probably",
+    "mse": true,
+    "mediaCapabilities": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": false
+    }
+   }
+  },
+  "hevc-main10-51-high-tier-40m": {
+   "type": "video/mp4; codecs=\"hvc1.2.4.L153.90,mp4a.40.2\"",
+   "canPlayType": "probably",
+   "mse": true,
+   "mediaCapabilities": {
+    "file": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": true
+    },
+    "mediaSource": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": true
+    }
+   },
+   "audio": {
+    "type": "audio/mp4; codecs=\"mp4a.40.2\"",
+    "canPlayType": "probably",
+    "mse": true,
+    "mediaCapabilities": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": false
+    }
+   }
+  },
+  "hevc-main10-51-high-tier-60m": {
+   "type": "video/mp4; codecs=\"hvc1.2.4.H153.90,mp4a.40.2\"",
+   "canPlayType": "probably",
+   "mse": true,
+   "mediaCapabilities": {
+    "file": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": true
+    },
+    "mediaSource": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": true
+    }
+   },
+   "audio": {
+    "type": "audio/mp4; codecs=\"mp4a.40.2\"",
+    "canPlayType": "probably",
+    "mse": true,
+    "mediaCapabilities": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": false
+    }
+   }
+  },
+  "vp9-p2-1080p30-long": {
+   "type": "video/mp4; codecs=\"vp09.02.40.10.01.09.16.09.00,mp4a.40.2\"",
+   "canPlayType": "probably",
+   "mse": true,
+   "mediaCapabilities": {
+    "file": {
+     "supported": true,
+     "smooth": true,
+     "powerEfficient": true
+    },
+    "mediaSource": {
+     "supported": true,
+     "smooth": true,
+     "powerEfficient": true
+    }
+   },
+   "audio": {
+    "type": "audio/mp4; codecs=\"mp4a.40.2\"",
+    "canPlayType": "probably",
+    "mse": true,
+    "mediaCapabilities": {
+     "supported": true,
+     "smooth": false,
+     "powerEfficient": false
+    }
+   }
+  }
+ },
+ "playback": [
+  {
+   "case": "hevc-main10-51-high-tier",
+   "format": "mp4",
+   "method": "file",
+   "url": "media/hevc-main10-51-high-tier/clip.mp4",
+   "result": "played",
+   "width": 3840,
+   "height": 2160,
+   "frames": 111,
+   "time": 3.73,
+   "ttffMs": 2388,
+   "droppedPct": 0,
+   "reachedEnd": true,
+   "audio": true,
+   "unmuted": true,
+   "error": null,
+   "ms": 6066,
+   "startedAt": 0
+  },
+  {
+   "case": "hevc-main10-51-high-tier",
+   "format": "hls-fmp4",
+   "method": "native",
+   "url": "media/hevc-main10-51-high-tier/hls/master.m3u8",
+   "result": "played",
+   "width": 3840,
+   "height": 2160,
+   "frames": 117,
+   "time": 3.93,
+   "ttffMs": 1391,
+   "droppedPct": 0,
+   "reachedEnd": true,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 5460,
+   "startedAt": 0
+  },
+  {
+   "case": "hevc-main10-51-high-tier",
+   "format": "hls-fmp4",
+   "method": "hls.js",
+   "url": "media/hevc-main10-51-high-tier/hls/master.m3u8",
+   "result": "played",
+   "width": 3840,
+   "height": 2160,
+   "frames": 109,
+   "time": 3.8,
+   "ttffMs": 757,
+   "droppedPct": 1.1,
+   "reachedEnd": true,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 4583,
+   "startedAt": 0.1
+  },
+  {
+   "case": "vp9-p2-pq",
+   "format": "webm",
+   "method": "file",
+   "url": "media/vp9-p2-pq/clip.webm",
+   "result": "played",
+   "width": 1920,
+   "height": 1080,
+   "frames": 114,
+   "time": 3.79,
+   "ttffMs": 380,
+   "droppedPct": 0,
+   "reachedEnd": true,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 4218,
+   "startedAt": 0
+  },
+  {
+   "case": "vp9-p2-pq",
+   "format": "mp4",
+   "method": "file",
+   "url": "media/vp9-p2-pq/clip.mp4",
+   "result": "failed",
+   "width": 0,
+   "height": 0,
+   "frames": 0,
+   "time": 0,
+   "ttffMs": null,
+   "droppedPct": null,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": null,
+   "error": {
+    "code": 4,
+    "message": ""
+   },
+   "ms": 644
+  },
+  {
+   "case": "hevc-main10-51-high-tier-long",
+   "format": "mp4",
+   "method": "file",
+   "url": "media/hevc-main10-51-high-tier-long/clip.mp4",
+   "result": "played",
+   "width": 3840,
+   "height": 2160,
+   "frames": 299,
+   "time": 0.75,
+   "ttffMs": 2735,
+   "droppedPct": 0,
+   "reachedEnd": false,
+   "audio": true,
+   "unmuted": true,
+   "error": null,
+   "ms": 13953,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 9.6,
+     "ok": true,
+     "ms": 635
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 624
+    }
+   ]
+  },
+  {
+   "case": "hevc-main10-51-high-tier-long",
+   "format": "hls-fmp4",
+   "method": "native",
+   "url": "media/hevc-main10-51-high-tier-long/hls/master.m3u8",
+   "result": "played",
+   "width": 3840,
+   "height": 2160,
+   "frames": 302,
+   "time": 0.67,
+   "ttffMs": 3071,
+   "droppedPct": 3.7,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 15832,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 9.6,
+     "ok": true,
+     "ms": 416
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 416
+    }
+   ]
+  },
+  {
+   "case": "hevc-main10-51-high-tier-long",
+   "format": "hls-fmp4",
+   "method": "hls.js",
+   "url": "media/hevc-main10-51-high-tier-long/hls/master.m3u8",
+   "result": "played",
+   "width": 3840,
+   "height": 2160,
+   "frames": 301,
+   "time": 0.73,
+   "ttffMs": 2837,
+   "droppedPct": 0.3,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 13825,
+   "startedAt": 0.1,
+   "seek": [
+    {
+     "to": 9.7,
+     "ok": true,
+     "ms": 420
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 416
+    }
+   ]
+  },
+  {
+   "case": "hevc-main10-51-high-tier-40m",
+   "format": "mp4",
+   "method": "file",
+   "url": "media/hevc-main10-51-high-tier-40m/clip.mp4",
+   "result": "played",
+   "width": 3840,
+   "height": 2160,
+   "frames": 154,
+   "time": 0.75,
+   "ttffMs": 3306,
+   "droppedPct": 0,
+   "reachedEnd": false,
+   "audio": true,
+   "unmuted": true,
+   "error": null,
+   "ms": 9774,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 4.8,
+     "ok": true,
+     "ms": 728
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 623
+    }
+   ]
+  },
+  {
+   "case": "hevc-main10-51-high-tier-40m",
+   "format": "hls-fmp4",
+   "method": "native",
+   "url": "media/hevc-main10-51-high-tier-40m/hls/master.m3u8",
+   "result": "played",
+   "width": 3840,
+   "height": 2160,
+   "frames": 149,
+   "time": 0.67,
+   "ttffMs": 3417,
+   "droppedPct": 3.7,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 11098,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 4.8,
+     "ok": true,
+     "ms": 520
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 416
+    }
+   ]
+  },
+  {
+   "case": "hevc-main10-51-high-tier-40m",
+   "format": "hls-fmp4",
+   "method": "hls.js",
+   "url": "media/hevc-main10-51-high-tier-40m/hls/master.m3u8",
+   "result": "played",
+   "width": 3840,
+   "height": 2160,
+   "frames": 155,
+   "time": 0.77,
+   "ttffMs": 2009,
+   "droppedPct": 0,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 8200,
+   "startedAt": 0.1,
+   "seek": [
+    {
+     "to": 4.9,
+     "ok": true,
+     "ms": 416
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 519
+    }
+   ]
+  },
+  {
+   "case": "hevc-main10-51-high-tier-60m",
+   "format": "mp4",
+   "method": "file",
+   "url": "media/hevc-main10-51-high-tier-60m/clip.mp4",
+   "result": "played",
+   "width": 3840,
+   "height": 2160,
+   "frames": 154,
+   "time": 0.53,
+   "ttffMs": 3678,
+   "droppedPct": 0,
+   "reachedEnd": false,
+   "audio": true,
+   "unmuted": true,
+   "error": null,
+   "ms": 12562,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 4.8,
+     "ok": true,
+     "ms": 735
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 3016
+    }
+   ]
+  },
+  {
+   "case": "hevc-main10-51-high-tier-60m",
+   "format": "hls-fmp4",
+   "method": "native",
+   "url": "media/hevc-main10-51-high-tier-60m/hls/master.m3u8",
+   "result": "played",
+   "width": 3840,
+   "height": 2160,
+   "frames": 150,
+   "time": 0.78,
+   "ttffMs": 3417,
+   "droppedPct": 3.7,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 13084,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 4.8,
+     "ok": true,
+     "ms": 415
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 521
+    }
+   ]
+  },
+  {
+   "case": "hevc-main10-51-high-tier-60m",
+   "format": "hls-fmp4",
+   "method": "hls.js",
+   "url": "media/hevc-main10-51-high-tier-60m/hls/master.m3u8",
+   "result": "played",
+   "width": 3840,
+   "height": 2160,
+   "frames": 154,
+   "time": 0.72,
+   "ttffMs": 3979,
+   "droppedPct": 0,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 10179,
+   "startedAt": 0.1,
+   "seek": [
+    {
+     "to": 4.9,
+     "ok": true,
+     "ms": 524
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 416
+    }
+   ]
+  },
+  {
+   "case": "vp9-p2-1080p30-long",
+   "format": "mp4",
+   "method": "file",
+   "url": "media/vp9-p2-1080p30-long/clip.mp4",
+   "result": "failed",
+   "width": 0,
+   "height": 0,
+   "frames": 0,
+   "time": 0,
+   "ttffMs": null,
+   "droppedPct": null,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": null,
+   "error": {
+    "code": 4,
+    "message": ""
+   },
+   "ms": 1685
+  },
+  {
+   "case": "vp9-p2-1080p30-long",
+   "format": "hls-fmp4",
+   "method": "native",
+   "url": "media/vp9-p2-1080p30-long/hls/master.m3u8",
+   "result": "played",
+   "width": 1920,
+   "height": 1080,
+   "frames": 836,
+   "time": 0.68,
+   "ttffMs": 1486,
+   "droppedPct": 0,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 30239,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 24,
+     "ok": true,
+     "ms": 312
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 312
+    }
+   ]
+  },
+  {
+   "case": "vp9-p2-1080p30-long",
+   "format": "hls-fmp4",
+   "method": "hls.js",
+   "url": "media/vp9-p2-1080p30-long/hls/master.m3u8",
+   "result": "played",
+   "width": 1920,
+   "height": 1080,
+   "frames": 843,
+   "time": 0.69,
+   "ttffMs": 1446,
+   "droppedPct": 0,
+   "reachedEnd": false,
+   "audio": false,
+   "unmuted": true,
+   "error": null,
+   "ms": 30177,
+   "startedAt": 0,
+   "seek": [
+    {
+     "to": 24,
+     "ok": true,
+     "ms": 311
+    },
+    {
+     "to": 0.5,
+     "ok": true,
+     "ms": 313
+    }
+   ]
+  }
+ ],
+ "extraTypes": {
+  "video/mp4; codecs=\"dvh1.05.06\"": {
+   "canPlayType": "probably",
+   "mse": true
+  },
+  "video/mp4; codecs=\"dvh1.08.06\"": {
+   "canPlayType": "probably",
+   "mse": true
+  },
+  "video/mp4; codecs=\"dvav.09.05\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "video/mp4; codecs=\"dav1.10.06\"": {
+   "canPlayType": "probably",
+   "mse": true
+  },
+  "video/mp4; codecs=\"vvc1.1.L123.CQA.O1+3\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "video/mp4; codecs=\"evc1\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "video/mp4; codecs=\"apv1\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"ec-3\"": {
+   "canPlayType": "probably",
+   "mse": true
+  },
+  "audio/mp4; codecs=\"ac-4.02.01.01\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"mp4a.40.42\"": {
+   "canPlayType": "probably",
+   "mse": true
+  },
+  "audio/mp4; codecs=\"mp4a.40.39\"": {
+   "canPlayType": "probably",
+   "mse": true
+  },
+  "audio/mp4; codecs=\"mhm1.0x0D\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"dtsx\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"dtse\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"iamf.001.001.Opus\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"apac\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"mlpa\"": {
+   "canPlayType": "",
+   "mse": false
+  },
+  "audio/mp4; codecs=\"alac\"": {
+   "canPlayType": "probably",
+   "mse": true
+  },
+  "audio/x-caf": {
+   "canPlayType": "maybe",
+   "mse": false
+  },
+  "audio/flac": {
+   "canPlayType": "maybe",
+   "mse": false
+  },
+  "audio/wav": {
+   "canPlayType": "maybe",
+   "mse": false
+  },
+  "audio/ogg; codecs=\"opus\"": {
+   "canPlayType": "probably",
+   "mse": true
+  }
+ },
+ "mode": "everything",
+ "audioUnmeasurable": [],
+ "finished": "2026-09-16T14:53:42.193Z"
+}
