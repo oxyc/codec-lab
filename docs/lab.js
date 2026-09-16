@@ -703,7 +703,12 @@ async function runPlayback() {
   $('run').disabled = true;
   $('stop').hidden = false;
   if (!audioProbe) setUpAudioProbe();
-  if (audioProbe?.ctx?.state === 'suspended') await audioProbe.ctx.resume();
+  // Bounded, because Safari does not resume an AudioContext until the page has been tapped and this
+  // promise simply never settles until then. Unbounded, an autorun start waits here for a tap that is
+  // about to press Run — which is how one run became two. Past the wait, sound reads as unmeasurable
+  // rather than missing (`calibrateAudio`), which is a true answer; a run that never starts is not.
+  if (audioProbe?.ctx?.state === 'suspended')
+    await Promise.race([audioProbe.ctx.resume(), sleep(2000)]);
   stopping = false;
   const steps = plan();
   const ran = new Set(steps.map(([c]) => c.id));
