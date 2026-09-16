@@ -269,6 +269,17 @@ CASES = [
                 "-x265-params", "log-level=error:profile=main10:level-idc=51:high-tier=1"]),
          AAC, MP4_FAMILY, seconds=12, segment=6, play_seconds=10,
          note="The tier Den Web refuses, at a bitrate worth refusing it for."),
+    # The 20 Mbit/s clip above played everywhere, but the release the refusal was written for is a ~24 GB remux at
+    # roughly 60-80 Mbit/s — so it showed the blanket rule is wrong without showing where the real edge is. These
+    # bracket it. Six seconds each, because a decoder that cannot take the bitrate says so at the start rather than
+    # halfway: what fails here fails on init or on the first segments.
+    *[Case(f"hevc-main10-51-high-tier-{mbit}m", "hevc", f"HEVC Main 10 5.1 High tier, 2160p at {mbit} Mbit/s, 6 s",
+           Video("libx265", (3840, 2160), "30", "yuv420p10le",
+                 ["-preset", "ultrafast", "-b:v", f"{mbit}M",
+                  "-x265-params", "log-level=error:profile=main10:level-idc=51:high-tier=1"]),
+           AAC, MP4_FAMILY, seconds=6, segment=3, play_seconds=5,
+           note="Brackets the bitrate at which High tier stops playing, if it does.")
+      for mbit in (40, 60)],
     # den#26: den-remux clears 10-bit VP9 for native sessions only because nobody has measured it in Apple's own
     # player — the long VP9 clips above are profile 0. Same shape, profile 2 and PQ, so the gate can be decided.
     Case("vp9-p2-1080p30-long", "vp9", "VP9 Profile 2 10-bit PQ, 1080p30 at 6 Mbit/s, 30 s",

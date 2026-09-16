@@ -1,5 +1,5 @@
 {
- "seconds": 30,
+ "seconds": 6,
  "cases": [
   {
    "id": "h264-baseline-30",
@@ -1495,6 +1495,68 @@
    ],
    "seconds": 12,
    "play_seconds": 10
+  },
+  {
+   "id": "hevc-main10-51-high-tier-40m",
+   "group": "hevc",
+   "title": "HEVC Main 10 5.1 High tier, 2160p at 40 Mbit/s, 6 s",
+   "note": "Brackets the bitrate at which High tier stops playing, if it does.",
+   "codecs": {
+    "video": "hvc1.2.4.L153.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 3840,
+   "height": 2160,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main10-51-high-tier-40m/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.L153.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main10-51-high-tier-40m/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ],
+   "seconds": 6,
+   "play_seconds": 5
+  },
+  {
+   "id": "hevc-main10-51-high-tier-60m",
+   "group": "hevc",
+   "title": "HEVC Main 10 5.1 High tier, 2160p at 60 Mbit/s, 6 s",
+   "note": "Brackets the bitrate at which High tier stops playing, if it does.",
+   "codecs": {
+    "video": "hvc1.2.4.H153.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 3840,
+   "height": 2160,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main10-51-high-tier-60m/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.H153.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main10-51-high-tier-60m/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ],
+   "seconds": 6,
+   "play_seconds": 5
   },
   {
    "id": "vp9-p2-1080p30-long",
