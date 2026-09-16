@@ -693,11 +693,18 @@ function columnFor(method) {
 }
 
 async function runPlayback() {
+  // One run at a time, decided BEFORE the first await. `autorun=1` calls this directly and so does the
+  // Run button, and the two awaits below used to sit in front of the line that disables the button — so
+  // a press while the audio probe was resolving started a second loop. Both then pushed into one
+  // `report.playback` and drove one <video>, and the report came out with every case twice, frame counts
+  // no clip could contain (a 4 s clip reporting 572 frames), and the same delivery judged both played and
+  // stalled. Two reports were thrown away to this before it was found.
+  if ($('run').disabled) return;
+  $('run').disabled = true;
+  $('stop').hidden = false;
   if (!audioProbe) setUpAudioProbe();
   if (audioProbe?.ctx?.state === 'suspended') await audioProbe.ctx.resume();
   stopping = false;
-  $('run').disabled = true;
-  $('stop').hidden = false;
   const steps = plan();
   const ran = new Set(steps.map(([c]) => c.id));
   report.mode = currentMode();
