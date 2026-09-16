@@ -1466,6 +1466,68 @@
    "play_seconds": 28
   },
   {
+   "id": "hevc-main10-51-high-tier-long",
+   "group": "hevc",
+   "title": "HEVC Main 10 5.1 High tier, 2160p at 20 Mbit/s, 12 s",
+   "note": "The tier Den Web refuses, at a bitrate worth refusing it for.",
+   "codecs": {
+    "video": "hvc1.2.4.L153.90",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "SDR",
+   "width": 3840,
+   "height": 2160,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/hevc-main10-51-high-tier-long/clip.mp4",
+     "mime": "video/mp4; codecs=\"hvc1.2.4.L153.90,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/hevc-main10-51-high-tier-long/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ],
+   "seconds": 12,
+   "play_seconds": 10
+  },
+  {
+   "id": "vp9-p2-1080p30-long",
+   "group": "vp9",
+   "title": "VP9 Profile 2 10-bit PQ, 1080p30 at 6 Mbit/s, 30 s",
+   "note": "Judged over the whole clip: 10-bit VP9 in Apple's own player is what den-remux's vp9Profile2 gate waits on.",
+   "codecs": {
+    "video": "vp09.02.40.10.01.09.16.09.00",
+    "audio": "mp4a.40.2"
+   },
+   "video_range": "PQ",
+   "width": 1920,
+   "height": 1080,
+   "fps": 30.0,
+   "audio_channels": 2,
+   "spatial": false,
+   "subtitles": null,
+   "formats": [
+    {
+     "format": "mp4",
+     "url": "media/vp9-p2-1080p30-long/clip.mp4",
+     "mime": "video/mp4; codecs=\"vp09.02.40.10.01.09.16.09.00,mp4a.40.2\""
+    },
+    {
+     "format": "hls-fmp4",
+     "url": "media/vp9-p2-1080p30-long/hls/master.m3u8",
+     "mime": "application/vnd.apple.mpegurl"
+    }
+   ],
+   "seconds": 30,
+   "play_seconds": 28
+  },
+  {
    "id": "vp8",
    "group": "legacy",
    "title": "VP8, 720p",

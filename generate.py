@@ -258,6 +258,24 @@ CASES = [
            AAC, ["mp4", "hls-fmp4"], seconds=30, segment=6, play_seconds=28,
            note="Judged over the whole clip: a stream a browser accepts but never presents stalls part-way.")
       for fps in (30, 60)],
+    # den#26: Den Web refuses HEVC High tier on every WebKit browser, on the evidence of one real UHD remux — but the
+    # four-second High-tier case above plays everywhere, including on an iPhone. A short clip at a low bitrate is the
+    # weakest possible test of a decoder: it is the BITRATE a High-tier release carries that a decoder runs out of road
+    # on, not the tier flag. This is the same tier and level at 20 Mbit/s, judged over the whole clip. It cannot
+    # approach a 24 GB remux — a repository cannot hold one — so a pass here narrows the question rather than closing it.
+    Case("hevc-main10-51-high-tier-long", "hevc", "HEVC Main 10 5.1 High tier, 2160p at 20 Mbit/s, 12 s",
+         Video("libx265", (3840, 2160), "30", "yuv420p10le",
+               ["-preset", "ultrafast", "-b:v", "20M",
+                "-x265-params", "log-level=error:profile=main10:level-idc=51:high-tier=1"]),
+         AAC, MP4_FAMILY, seconds=12, segment=6, play_seconds=10,
+         note="The tier Den Web refuses, at a bitrate worth refusing it for."),
+    # den#26: den-remux clears 10-bit VP9 for native sessions only because nobody has measured it in Apple's own
+    # player — the long VP9 clips above are profile 0. Same shape, profile 2 and PQ, so the gate can be decided.
+    Case("vp9-p2-1080p30-long", "vp9", "VP9 Profile 2 10-bit PQ, 1080p30 at 6 Mbit/s, 30 s",
+         Video("libvpx-vp9", (1920, 1080), "30", "yuv420p10le",
+               ["-profile:v", "2", "-b:v", "6M", "-deadline", "realtime", "-cpu-used", "8", "-row-mt", "1"], **PQ),
+         AAC, ["mp4", "hls-fmp4"], seconds=30, segment=6, play_seconds=28,
+         note="Judged over the whole clip: 10-bit VP9 in Apple's own player is what den-remux's vp9Profile2 gate waits on."),
     Case("vp8", "legacy", "VP8, 720p", Video("libvpx", (1280, 720), "30", "yuv420p", ["-b:v", "1M", "-deadline", "realtime",
          "-cpu-used", "8"]), Audio("libvorbis", args=["-q:a", "4"]), ["webm"]),
     Case("theora", "legacy", "Theora, 640×360", Video("libtheora", args=["-q:v", "6"]), Audio("libvorbis", args=["-q:a", "4"]),
