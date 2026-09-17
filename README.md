@@ -37,7 +37,7 @@ nothing here can encode yet (AC-4, MPEG-H, xHE-AAC, VVC, IAMF…).
 
 ## Results so far
 
-From the reports in [`results/`](results/), 2026-09-15. ✅ plays · ❌ doesn't · 🔇 picture but no sound. "Own
+From the reports in [`results/`](results/), 2026-09-15 and 2026-09-16. ✅ plays · ❌ doesn't · 🔇 picture but no sound. "Own
 player" is HLS handed to the browser's `<video>`; iPhone is iOS 26.6 WebKit, where Safari and Brave matched.
 
 | | iPhone | Safari 18.6, Mac | Chrome 151, Mac |
@@ -45,6 +45,7 @@ player" is HLS handed to the browser's `<video>`; iPhone is iOS 26.6 WebKit, whe
 | H.264 8-bit up to 2160p, 23.976–120 fps | ✅ | ✅ | ✅ |
 | H.264 High 10, High 4:4:4 | ✅ | ❌ | ✅ |
 | HEVC Main/Main 10, High tier, RExt, 8K | ✅ | ✅ | ✅ |
+| HEVC High tier, 2160p at 20, 40 and 60 Mbit/s | ✅ file, own player, hls.js ³ | ✅ file, own player, hls.js ³ | not run ³ |
 | HEVC tagged `hev1`, as a file | ❌ (✅ in HLS) | ❌ (✅ in HLS) | ✅ |
 | HEVC in MPEG-TS HLS, own player | ❌ | ❌ | ❌ |
 | HDR10, HLG, HDR10+ (picture; HDR look not judged) | ✅ | ✅ | ✅ |
@@ -56,7 +57,7 @@ player" is HLS handed to the browser's `<video>`; iPhone is iOS 26.6 WebKit, whe
 | AV1 in WebM | ✅ | ❌ | ✅ |
 | AV1 4320p in HLS | ❌ | ✅ | ✅ |
 | AV1 High 4:4:4, VP9 4:4:4 | ❌ | ❌ | ✅ |
-| VP9 profiles 0 and 2 | ✅ WebM, hls.js; ❌ MP4; own player ❓ ¹ | ✅ WebM, MP4, hls.js, own player ¹ | ✅ |
+| VP9 profiles 0 and 2 | ✅ WebM, own player, hls.js; ❌ MP4 ¹ | ✅ WebM, MP4, hls.js, own player ¹ | ✅ |
 | VP9 1080p30 and 1080p60, 30 s at 6 Mbit/s, with AAC | ✅ own player, hls.js; ❌ file ² | ✅ file, own player, hls.js | ✅ file, own player, hls.js |
 | MPEG-4 Part 2 in MP4, ProRes 422 | ✅ | ✅ | ❌ |
 | MPEG-2 | ❌ | ✅ TS file only | ❌ |
@@ -64,7 +65,7 @@ player" is HLS handed to the browser's `<video>`; iPhone is iOS 26.6 WebKit, whe
 | Matroska | ❌ | ❌ | ✅ |
 | MPEG-TS and M2TS files (H.264) | ❌ | ✅ | ❌ |
 | AAC LC and HE-AAC, FLAC | ✅ | ✅ | ✅ |
-| AC-3, E-AC-3, ALAC | ✅ | ✅ | 🔇 file; ❌ HLS |
+| AC-3, E-AC-3, ALAC | ✅ | ✅ | 🔇 file; ❌ HLS ⁴ |
 | MP3 | 🔇 MP4 file; ❌ HLS | 🔇 MP4 file; ❌ HLS | ✅ file and TS HLS; ❌ hls.js |
 | Opus | 2.0 ✅ file and hls.js; 5.1 ❌; ❌ own player | 2.0 ✅ file and hls.js; 5.1 ❌; ❌ own player | ✅ |
 | DTS core, TrueHD | 🔇 DTS in MP4; TrueHD in Matroska ❌ | 🔇 DTS in MP4; TrueHD in Matroska ❌ | 🔇 |
@@ -87,6 +88,20 @@ whatever their codec. Both are written up in oxyc/den#26, section A7.
 ² On the iPhone the MP4 file is refused with `MEDIA_ERR_SRC_NOT_SUPPORTED` although `canPlayType` answers "probably"
 and Media Capabilities calls it supported, smooth and power efficient. The same stream plays in HLS. The 60 fps clip
 presented about 48 frames a second in the own player and 55 in hls.js, with none reported dropped.
+
+³ **No ceiling was found.** 2160p High tier played in every path — file, Apple's own HLS player, hls.js — on
+both WebKit browsers, at 20, 40 and 60 Mbit/s. Nothing failed, 60 Mbit/s as a progressive 48 MB file included.
+Dropped frames stayed low: 0–3.8 % across the whole ladder on macOS Safari, and 0–3.7 % on the iPhone's 60 Mbit
+run, the native player being the one that drops any. Time to first frame rises with bitrate without becoming a
+failure — on macOS Safari from 0.6 s (20 Mbit, hls.js) to 4.9 s (the long clip, native player). Chrome is marked
+"not run" honestly: the 40 and 60 Mbit clips were generated after its report, so it has no verdict here rather
+than a passing one. This is the evidence behind den#26 §A2 no longer refusing High tier on Apple's stack —
+sixty megabits is not eighty, and a refusal needs a number somebody measured.
+
+⁴ Chrome's HLS failure is `manifestIncompatibleCodecsError`, and the probe disagrees with itself about why:
+`mediaCapabilities.decodingInfo` answers `supported: true` for AC-3 and E-AC-3 while `canPlayType` returns `""`
+and `MediaSource.isTypeSupported` says false. Two of the three say no and they are the ones telling the truth,
+which is the whole argument for playing the clip rather than asking the browser.
 
 ## What is covered
 
